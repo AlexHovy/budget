@@ -1,19 +1,24 @@
-const bodyParser = require('body-parser');
+require("dotenv").config();
+
 const express = require('express');
-const connectDB = require('./config/db');
-const categories = require('./routes/api/categories');
+const bodyParser = require('body-parser');
+
+const connectDB = require('./configs/db');
+const routes = require('./routes/routes');
 
 const app = express();
+const PORT = process.env.PORT;
+
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 connectDB();
 
-app.use(express.json());
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
+app.use('/api', routes);
 
-app.use('/api/categories', categories);
-
-const port = process.env.PORT || 8082;
-
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.listen(PORT, () => (error) => {
+  if (!error)
+    console.log(`Server running on port ${PORT}`);
+  else
+    console.error(`Server could not start: ${error}`);
+});
