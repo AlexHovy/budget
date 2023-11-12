@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import User, { IUser } from "../models/user.model";
+import User, { UserDto } from "../models/user.model";
 
 const { TOKEN_KEY, TOKEN_EXPIRES_IN } = process.env;
 
@@ -28,10 +28,11 @@ const register = async (
       password: encryptedPassword,
     });
 
-    const token = signToken(user);
-    user.token = token;
+    const userDto = user.toDto();
+    const token = signToken(userDto);
+    userDto.token = token;
 
-    return res.status(201).json(user);
+    return res.status(201).json(userDto);
   } catch (err) {
     return res.status(400).json({ error: "Unable to register user" });
   }
@@ -51,18 +52,19 @@ const login = async (req: Request, res: Response): Promise<Response | void> => {
   if (!isPasswordValid)
     return res.status(400).json({ error: "Invalid credentials" });
 
-  const token = signToken(user);
-  user.token = token;
+  const userDto = user.toDto();
+  const token = signToken(userDto);
+  userDto.token = token;
 
-  return res.status(200).json(user);
+  return res.status(200).json(userDto);
 };
 
-function signToken(user: IUser): string {
+function signToken(user: UserDto): string {
   if (!TOKEN_KEY) {
     throw new Error("Token key is not set in the environment variables");
   }
 
-  return jwt.sign({ userId: user._id, userEmail: user.email }, TOKEN_KEY, {
+  return jwt.sign({ userId: user.id, userEmail: user.email }, TOKEN_KEY, {
     expiresIn: TOKEN_EXPIRES_IN,
   });
 }
