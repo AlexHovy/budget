@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
+import { TableNames } from "../constants/table-names";
 
 export interface UserDto {
   id: string;
@@ -32,6 +33,6 @@ UserSchema.methods.toDto = function (): UserDto {
   };
 };
 
-const User: Model<IUser> = mongoose.model<IUser>("user", UserSchema);
+const User: Model<IUser> = mongoose.model<IUser>(TableNames.User, UserSchema);
 
 export default User;
