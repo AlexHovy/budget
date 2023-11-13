@@ -35,16 +35,15 @@ export class UserController {
     const isInputValid = email && password;
     if (!isInputValid) return res.status(400).json({ error: "User not valid" });
 
-    const existingPassword = await UserQuery.getPasswordByEmail(email);
-
-    if (!existingPassword)
+    const user = await UserQuery.getByEmail(email);
+    if (!user)
       return res.status(400).json({ error: "Invalid credentials" });
 
-    const isPasswordValid = await bcrypt.compare(password, existingPassword);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid)
       return res.status(400).json({ error: "Invalid credentials" });
 
-    const userDto = await UserService.login(email);
+    const userDto = await UserService.login(user);
     return res.status(200).json(userDto);
   }
 }

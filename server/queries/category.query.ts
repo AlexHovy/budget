@@ -3,9 +3,9 @@ import { CategoryDto } from "../dtos/category.dto";
 import Category from "../models/category.model";
 
 export class CategoryQuery {
-  static async getAll(): Promise<CategoryDto[]> {
+  static async getAll(userId: string): Promise<CategoryDto[]> {
     try {
-      const categories = await Category.find().populate(TableNames.User);
+      const categories = await Category.find({ userId });
       return categories.map((category) => category.toDto());
     } catch (err) {
       throw err;
@@ -14,7 +14,7 @@ export class CategoryQuery {
 
   static async getById(id: string): Promise<CategoryDto | null> {
     try {
-      const category = await Category.findById(id).populate(TableNames.User);
+      const category = await Category.findById(id);
       if (!category) return null;
       return category.toDto();
     } catch (err) {

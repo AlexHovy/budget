@@ -1,11 +1,16 @@
 import { Request, Response } from "express";
 import { CategoryQuery } from "../queries/category.query";
 import { CategoryService } from "../services/category.service";
+import { TokenHelper } from "../helpers/token.helper";
 
 export class CategoryController {
   static async get(req: Request, res: Response): Promise<Response | void> {
     try {
-      const categories = await CategoryQuery.getAll();
+      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      if (!tokenDto)
+        return res.status(401).json({ message: "Unauthorized user" });
+
+      const categories = await CategoryQuery.getAll(tokenDto?.userId);
       return res.json(categories);
     } catch (err) {
       return res.status(404).json({ error: err });

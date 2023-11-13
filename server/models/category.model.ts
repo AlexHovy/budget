@@ -8,7 +8,7 @@ export interface ICategory extends IBase {
   parentCategoryId?: string;
   name: string;
   description?: string;
-  user: IUser | mongoose.Schema.Types.ObjectId;
+  userId: Schema.Types.ObjectId;
   toDto: () => CategoryDto;
 }
 
@@ -17,9 +17,8 @@ const CategorySchema: Schema = new Schema(
     parentCategoryId: { type: String },
     name: { type: String, required: true },
     description: { type: String },
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
-      ref: TableNames.User,
       required: true,
     },
   },
@@ -35,7 +34,7 @@ CategorySchema.methods.toDto = function (): CategoryDto {
     parentCategoryId: this.parentCategoryId,
     name: this.name,
     description: this.description,
-    user: (this.user as IUser).toDto(),
+    userId: this.userId.toString(),
   };
 };
 

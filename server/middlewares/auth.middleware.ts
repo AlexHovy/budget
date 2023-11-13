@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import { TokenHelper } from "../helpers/token.helper";
 
 const { TOKEN_KEY } = process.env;
 
@@ -9,12 +10,7 @@ export class AuthMiddleware {
     res: Response,
     next: NextFunction
   ): Response | void {
-    const token =
-      (req.headers.authorization && req.headers.authorization.split(" ")[1]) ||
-      req.headers["x-access-token"] ||
-      req.query.token ||
-      req.body.token;
-
+    const token = TokenHelper.getTokenFromRequest(req);
     if (!token) {
       return res
         .status(403)
@@ -23,12 +19,10 @@ export class AuthMiddleware {
 
     try {
       if (TOKEN_KEY) {
-        const decoded = jwt.verify(token, TOKEN_KEY);
-        (req as any).user = decoded;
+        const tokenDto = TokenHelper.getTokenDto(token);
+        if (!tokenDto) throw new Error("Invalid token");
       } else {
-        throw new Error(
-          "TOKEN_KEY is not defined in your environment variables"
-        );
+        throw new Error("Missing TOKEN_KEY environment variable");
       }
     } catch (err) {
       return res.status(401).json({ error: "Invalid token" });

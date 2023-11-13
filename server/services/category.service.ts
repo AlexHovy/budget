@@ -1,15 +1,14 @@
-import { TableNames } from "../constants/table-names";
 import { CategoryDto } from "../dtos/category.dto";
 import Category from "../models/category.model";
 
 export class CategoryService {
-  static async create(categoryDto: CategoryDto): Promise<CategoryDto> {
+  static async create(categoryDto: CategoryDto): Promise<CategoryDto | null> {
     try {
       const category = await Category.create({
         parentCategoryId: categoryDto.parentCategoryId,
         name: categoryDto.name,
         description: categoryDto.description,
-        user: categoryDto.user,
+        userId: categoryDto.userId,
       });
       return category.toDto();
     } catch (err) {
@@ -23,8 +22,8 @@ export class CategoryService {
         parentCategoryId: categoryDto.parentCategoryId,
         name: categoryDto.name,
         description: categoryDto.description,
-        updatedAt: new Date,
-      }).populate(TableNames.User);
+        updatedAt: new Date(),
+      });
       if (!category) return null;
       return category.toDto();
     } catch (err) {

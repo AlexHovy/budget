@@ -19,14 +19,4 @@ export class UserQuery {
       throw err;
     }
   }
-
-  static async getPasswordByEmail(email: string): Promise<string | null> {
-    try {
-      const user = await User.findOne({ email });
-      if (!user) return null;
-      return user.password;
-    } catch (err) {
-      throw err;
-    }
-  }
 }
