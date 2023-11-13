@@ -1,72 +1,50 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import User, { UserDto } from "../models/user.model";
+import { UserService } from "../services/user.service";
+import { UserQuery } from "../queries/user.query";
 
-const { TOKEN_KEY, TOKEN_EXPIRES_IN } = process.env;
+export class UserController {
+  static async register(req: Request, res: Response): Promise<Response | void> {
+    const { firstName, lastName, email, password } = req.body;
 
-const register = async (
-  req: Request,
-  res: Response
-): Promise<Response | void> => {
-  const { firstName, lastName, email, password } = req.body;
+    const isInputValid = firstName && lastName && email && password;
+    if (!isInputValid) return res.status(400).json({ error: "User not valid" });
 
-  const isInputValid = firstName && lastName && email && password;
-  if (!isInputValid) return res.status(400).json({ error: "User not valid" });
+    const isUserUnique = await UserQuery.isExistingUser(email);
+    if (isUserUnique)
+      return res.status(409).json({ error: "User already exists" });
 
-  const isUserUnique = await User.findOne({ email });
-  if (isUserUnique)
-    return res.status(409).json({ error: "User already exists" });
+    const encryptedPassword = await bcrypt.hash(password, 10);
 
-  const encryptedPassword = await bcrypt.hash(password, 10);
-
-  try {
-    const user = await User.create({
-      firstName,
-      lastName,
-      email: email.toLowerCase(),
-      password: encryptedPassword,
-    });
-
-    const userDto = user.toDto();
-    const token = signToken(userDto);
-    userDto.token = token;
-
-    return res.status(201).json(userDto);
-  } catch (err) {
-    return res.status(400).json({ error: "Unable to register user" });
-  }
-};
-
-const login = async (req: Request, res: Response): Promise<Response | void> => {
-  const { email, password } = req.body;
-
-  const isInputValid = email && password;
-  if (!isInputValid) return res.status(400).json({ error: "User not valid" });
-
-  const user = await User.findOne({ email });
-
-  if (!user) return res.status(400).json({ error: "Invalid credentials" });
-
-  const isPasswordValid = await bcrypt.compare(password, user.password);
-  if (!isPasswordValid)
-    return res.status(400).json({ error: "Invalid credentials" });
-
-  const userDto = user.toDto();
-  const token = signToken(userDto);
-  userDto.token = token;
-
-  return res.status(200).json(userDto);
-};
-
-function signToken(user: UserDto): string {
-  if (!TOKEN_KEY) {
-    throw new Error("Token key is not set in the environment variables");
+    try {
+      const userDto = await UserService.register(
+        firstName,
+        lastName,
+        email,
+        encryptedPassword
+      );
+      return res.status(201).json(userDto);
+    } catch (err) {
+      return res.status(400).json({ error: "Unable to register user" });
+    }
   }
 
-  return jwt.sign({ userId: user.id, userEmail: user.email }, TOKEN_KEY, {
-    expiresIn: TOKEN_EXPIRES_IN,
-  });
+  static async login(req: Request, res: Response): Promise<Response | void> {
+    const { email, password } = req.body;
+
+    const isInputValid = email && password;
+    if (!isInputValid) return res.status(400).json({ error: "User not valid" });
+
+    const existingPassword = await UserQuery.getPasswordByEmail(email);
+
+    if (!existingPassword)
+      return res.status(400).json({ error: "Invalid credentials" });
+
+    const isPasswordValid = await bcrypt.compare(password, existingPassword);
+    if (!isPasswordValid)
+      return res.status(400).json({ error: "Invalid credentials" });
+
+    const userDto = await UserService.login(email);
+    return res.status(200).json(userDto);
+  }
 }
-
-export { register, login };

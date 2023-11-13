@@ -1,5 +1,6 @@
 import { TableNames } from "../constants/table-names";
-import Category, { CategoryDto } from "../models/category.model";
+import { CategoryDto } from "../dtos/category.dto";
+import Category from "../models/category.model";
 
 export class CategoryService {
   static async Create(categoryDto: CategoryDto): Promise<CategoryDto> {

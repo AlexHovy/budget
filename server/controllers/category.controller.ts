@@ -2,49 +2,53 @@ import { Request, Response } from "express";
 import { CategoryQuery } from "../queries/category.query";
 import { CategoryService } from "../services/category.service";
 
-const get = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const categories = await CategoryQuery.getAll();
-    res.json(categories);
-  } catch (err) {
-    res.status(404).json({ error: err });
+export class CategoryController {
+  static async get(req: Request, res: Response): Promise<Response | void> {
+    try {
+      const categories = await CategoryQuery.getAll();
+      return res.json(categories);
+    } catch (err) {
+      return res.status(404).json({ error: err });
+    }
   }
-};
 
-const getById = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const category = await CategoryQuery.getById(req.params.id);
-    res.json(category);
-  } catch (err) {
-    res.status(404).json({ error: err });
+  static async getById(req: Request, res: Response): Promise<Response | void> {
+    try {
+      const category = await CategoryQuery.getById(req.params.id);
+      if (!category)
+        return res.status(404).json({ message: "Category not found" });
+      return res.json(category);
+    } catch (err) {
+      return res.status(404).json({ error: err });
+    }
   }
-};
 
-const post = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const category = await CategoryService.Create(req.body);
-    res.json(category);
-  } catch (err) {
-    res.status(400).json({ error: err });
+  static async post(req: Request, res: Response): Promise<Response | void> {
+    try {
+      const category = await CategoryService.Create(req.body);
+      return res.status(201).json(category);
+    } catch (err) {
+      return res.status(400).json({ error: err });
+    }
   }
-};
 
-const put = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const category = await CategoryService.Update(req.body);
-    res.json(category);
-  } catch (err) {
-    res.status(400).json({ error: err });
+  static async put(req: Request, res: Response): Promise<Response | void> {
+    try {
+      const category = await CategoryService.Update(req.body);
+      if (!category)
+        return res.status(404).json({ message: "Category not found" });
+      return res.json(category);
+    } catch (err) {
+      return res.status(400).json({ error: err });
+    }
   }
-};
 
-const remove = async (req: Request, res: Response): Promise<void> => {
-  try {
-    await CategoryService.Delete(req.params.id);
-    res.status(200);
-  } catch (err) {
-    res.status(404).json({ error: err });
+  static async remove(req: Request, res: Response): Promise<Response | void> {
+    try {
+      await CategoryService.Delete(req.params.id);
+      return res.status(200).json({ message: "Category deleted successfully" });
+    } catch (err) {
+      return res.status(404).json({ error: err });
+    }
   }
-};
-
-export { get, getById, post, put, remove };
+}

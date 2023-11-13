@@ -1,15 +1,8 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
+import { UserDto } from "../dtos/user.dto";
 
-export interface UserDto {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  token?: string;
-}
-
-interface IUser extends Document {
+export interface IUser extends Document {
   firstName: string;
   lastName: string;
   email: string;
@@ -17,12 +10,17 @@ interface IUser extends Document {
   toDto: () => UserDto;
 }
 
-const UserSchema: Schema = new Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
-});
+const UserSchema: Schema = new Schema(
+  {
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
+  },
+  {
+    collection: TableNames.User,
+  }
+);
 
 UserSchema.methods.toDto = function (): UserDto {
   return {

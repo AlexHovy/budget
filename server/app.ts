@@ -2,9 +2,9 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express, { Application } from "express";
-import connectDB from "./configs/db.config";
 import userRoutes from "./routes/user.route";
 import apiRoutes from "./routes/api.route";
+import { DatabaseService } from "./services/database.service";
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 3000;
 
@@ -13,7 +13,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-connectDB();
+DatabaseService.connect();
 
 app.use("/user", userRoutes);
 app.use("/api", apiRoutes);
