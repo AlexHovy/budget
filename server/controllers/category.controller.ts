@@ -25,7 +25,7 @@ export class CategoryController {
 
   static async post(req: Request, res: Response): Promise<Response | void> {
     try {
-      const category = await CategoryService.Create(req.body);
+      const category = await CategoryService.create(req.body);
       return res.status(201).json(category);
     } catch (err) {
       return res.status(400).json({ error: err });
@@ -34,7 +34,7 @@ export class CategoryController {
 
   static async put(req: Request, res: Response): Promise<Response | void> {
     try {
-      const category = await CategoryService.Update(req.body);
+      const category = await CategoryService.update(req.body);
       if (!category)
         return res.status(404).json({ message: "Category not found" });
       return res.json(category);
@@ -45,7 +45,7 @@ export class CategoryController {
 
   static async remove(req: Request, res: Response): Promise<Response | void> {
     try {
-      await CategoryService.Delete(req.params.id);
+      await CategoryService.delete(req.params.id);
       return res.status(200).json({ message: "Category deleted successfully" });
     } catch (err) {
       return res.status(404).json({ error: err });

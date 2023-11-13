@@ -1,8 +1,9 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
 import { ExpenseDto } from "../dtos/expense.dto";
+import BaseSchema, { IBase } from "./base.model";
 
-export interface IExpense extends Document {
+export interface IExpense extends IBase {
   name: string;
   description?: string;
   amount: number;
@@ -19,6 +20,7 @@ const ExpenseSchema: Schema = new Schema(
     collection: TableNames.Expense,
   }
 );
+ExpenseSchema.add(BaseSchema);
 
 ExpenseSchema.methods.toDto = function (): ExpenseDto {
   return {

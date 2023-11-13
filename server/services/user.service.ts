@@ -32,10 +32,16 @@ export class UserService {
 
   static async login(email: string): Promise<UserDto> {
     try {
-      const userDto = await UserQuery.getByEmail(email);
-      if (!userDto) {
+      const user = await UserQuery.getByEmail(email);
+      if (!user) {
         throw new Error("User not found");
       }
+
+      user.loggedInAt = new Date();
+      user.updatedAt = new Date();
+
+      const userDto = user.toDto();
+      await User.findByIdAndUpdate(userDto.id, user);
 
       const token = this.signToken(userDto);
       userDto.token = token;

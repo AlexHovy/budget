@@ -1,12 +1,14 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
 import { UserDto } from "../dtos/user.dto";
+import BaseSchema, { IBase } from "./base.model";
 
-export interface IUser extends Document {
+export interface IUser extends IBase {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  loggedInAt: Date;
   toDto: () => UserDto;
 }
 
@@ -16,11 +18,13 @@ const UserSchema: Schema = new Schema(
     lastName: { type: String, required: true },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
+    loggedInAt: { type: Date, default: Date.now },
   },
   {
     collection: TableNames.User,
   }
 );
+UserSchema.add(BaseSchema);
 
 UserSchema.methods.toDto = function (): UserDto {
   return {
@@ -28,6 +32,9 @@ UserSchema.methods.toDto = function (): UserDto {
     firstName: this.firstName,
     lastName: this.lastName,
     email: this.email,
+    loggedInAt: this.loggedInAt,
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
   };
 };
 

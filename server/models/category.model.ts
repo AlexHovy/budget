@@ -1,9 +1,10 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
 import { CategoryDto } from "../dtos/category.dto";
 import { IUser } from "./user.model";
+import BaseSchema, { IBase } from "./base.model";
 
-export interface ICategory extends Document {
+export interface ICategory extends IBase {
   parentCategoryId?: string;
   name: string;
   description?: string;
@@ -26,6 +27,7 @@ const CategorySchema: Schema = new Schema(
     collection: TableNames.Category,
   }
 );
+CategorySchema.add(BaseSchema);
 
 CategorySchema.methods.toDto = function (): CategoryDto {
   return {
