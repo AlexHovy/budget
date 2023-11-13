@@ -1,18 +1,20 @@
-import { UserDto } from "../dtos/user.dto";
-import User, { IUser } from "../models/user.model";
+import { IUser } from "../models/user.model";
+import { IRepositoryService } from "../services/interfaces/repository.interface";
 
 export class UserQuery {
-  static async isExistingUser(email: string): Promise<boolean> {
+  constructor(private userRepository: IRepositoryService<IUser>) {}
+
+  async isExistingUser(email: string): Promise<boolean> {
     try {
-      return !!(await User.exists({ email }));
+      return !!(await this.userRepository.exists({ email }));
     } catch (err) {
       throw err;
     }
   }
 
-  static async getByEmail(email: string): Promise<IUser | null> {
+  async getByEmail(email: string): Promise<IUser | null> {
     try {
-      const user = await User.findOne({ email });
+      const user = await this.userRepository.findOne({ email });
       if (!user) return null;
       return user;
     } catch (err) {

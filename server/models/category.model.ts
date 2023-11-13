@@ -1,14 +1,14 @@
 import mongoose, { Schema, Model } from "mongoose";
+import { ObjectId } from "mongodb";
 import { TableNames } from "../constants/table-names";
 import { CategoryDto } from "../dtos/category.dto";
-import { IUser } from "./user.model";
 import BaseSchema, { IBase } from "./base.model";
 
 export interface ICategory extends IBase {
   parentCategoryId?: string;
   name: string;
   description?: string;
-  userId: Schema.Types.ObjectId;
+  userId: ObjectId;
   toDto: () => CategoryDto;
 }
 
@@ -18,7 +18,7 @@ const CategorySchema: Schema = new Schema(
     name: { type: String, required: true },
     description: { type: String },
     userId: {
-      type: Schema.Types.ObjectId,
+      type: ObjectId,
       required: true,
     },
   },
@@ -35,6 +35,8 @@ CategorySchema.methods.toDto = function (): CategoryDto {
     name: this.name,
     description: this.description,
     userId: this.userId.toString(),
+    createdAt: this.createdAt,
+    updatedAt: this.updatedAt,
   };
 };
 

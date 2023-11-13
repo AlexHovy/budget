@@ -1,14 +1,18 @@
+import { ObjectId } from "mongodb";
 import { CategoryDto } from "../dtos/category.dto";
-import Category from "../models/category.model";
+import Category, { ICategory } from "../models/category.model";
+import { IRepositoryService } from "./interfaces/repository.interface";
 
 export class CategoryService {
-  static async create(categoryDto: CategoryDto): Promise<CategoryDto | null> {
+  constructor(private categoryRepository: IRepositoryService<ICategory>) {}
+
+  async create(categoryDto: CategoryDto): Promise<CategoryDto | null> {
     try {
-      const category = await Category.create({
+      const category = await this.categoryRepository.create({
         parentCategoryId: categoryDto.parentCategoryId,
         name: categoryDto.name,
         description: categoryDto.description,
-        userId: categoryDto.userId,
+        userId: new ObjectId(categoryDto.userId),
       });
       return category.toDto();
     } catch (err) {
@@ -16,9 +20,9 @@ export class CategoryService {
     }
   }
 
-  static async update(categoryDto: CategoryDto): Promise<CategoryDto | null> {
+  async update(categoryDto: CategoryDto): Promise<CategoryDto | null> {
     try {
-      const category = await Category.findByIdAndUpdate(categoryDto.id, {
+      const category = await this.categoryRepository.update(categoryDto.id, {
         parentCategoryId: categoryDto.parentCategoryId,
         name: categoryDto.name,
         description: categoryDto.description,
@@ -31,9 +35,9 @@ export class CategoryService {
     }
   }
 
-  static async delete(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     try {
-      await Category.findByIdAndRemove(id);
+      await this.categoryRepository.delete(id);
     } catch (err) {
       throw err;
     }

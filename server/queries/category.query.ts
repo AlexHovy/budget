@@ -1,20 +1,22 @@
-import { TableNames } from "../constants/table-names";
 import { CategoryDto } from "../dtos/category.dto";
-import Category from "../models/category.model";
+import Category, { ICategory } from "../models/category.model";
+import { IRepositoryService } from "../services/interfaces/repository.interface";
 
 export class CategoryQuery {
-  static async getAll(userId: string): Promise<CategoryDto[]> {
+  constructor(private categoryRepository: IRepositoryService<ICategory>) {}
+
+  async getAll(userId: string): Promise<CategoryDto[]> {
     try {
-      const categories = await Category.find({ userId });
+      const categories = await this.categoryRepository.findAllBy({ userId });
       return categories.map((category) => category.toDto());
     } catch (err) {
       throw err;
     }
   }
 
-  static async getById(id: string): Promise<CategoryDto | null> {
+  async getById(id: string): Promise<CategoryDto | null> {
     try {
-      const category = await Category.findById(id);
+      const category = await this.categoryRepository.findById(id);
       if (!category) return null;
       return category.toDto();
     } catch (err) {

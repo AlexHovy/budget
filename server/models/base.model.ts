@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model } from "mongoose";
+import { Schema } from "mongoose";
 
 export interface IBase extends Document {
   createdAt?: Date;

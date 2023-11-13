@@ -1,7 +1,8 @@
-import mongoose, { Document, Model } from "mongoose";
+import { Model } from "mongoose";
 import { IBase } from "../models/base.model";
+import { IRepositoryService } from "./interfaces/repository.interface";
 
-export class RepositoryService<T extends IBase> {
+export class RepositoryService<T extends IBase> implements IRepositoryService<T> {
   private model: Model<T>;
 
   constructor(model: Model<T>) {
@@ -10,6 +11,10 @@ export class RepositoryService<T extends IBase> {
 
   async findAll(): Promise<T[]> {
     return this.model.find().exec();
+  }
+
+  async findAllBy(filter: Partial<T>): Promise<T[]> {
+    return this.model.find(filter).exec();
   }
 
   async findOne(filter: Partial<T>): Promise<T | null> {

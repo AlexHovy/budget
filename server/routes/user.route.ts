@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { UserController } from "../controllers/user.controller";
+import { userController } from "../configs/di.config";
 
 const router = Router();
 
-router.post("/register", UserController.register);
-router.post("/login", UserController.login);
+router.post("/register", userController.register);
+router.post("/login", userController.login);
 
 export default router;
