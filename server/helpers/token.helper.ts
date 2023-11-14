@@ -2,32 +2,45 @@ import { Request } from "express";
 import jwt from "jsonwebtoken";
 import { TokenDto } from "../dtos/token.dto";
 import { SettingsConfig } from "../configs/settings.config";
+import { BadRequestError, InternalServerError } from "../utils/error.util";
 
 export class TokenHelper {
-  static getTokenFromRequest(req: Request): string {
-    return (
-      (req.headers.authorization && req.headers.authorization.split(" ")[1]) ||
-      req.headers["x-access-token"] ||
-      req.query.token ||
-      req.body.token
-    );
+  static getTokenFromRequest(req: Request): string | undefined {
+    try {
+      const token =
+        (req.headers.authorization &&
+          req.headers.authorization.split(" ")[1]) ||
+        req.headers["x-access-token"] ||
+        req.query.token ||
+        req.body.token;
+      if (!token) throw new BadRequestError("Invalid token");
+      return token;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   static getTokenDtoFromRequest(req: Request): TokenDto | undefined {
-    const token = this.getTokenFromRequest(req);
-    return this.getTokenDto(token);
+    try {
+      const token = this.getTokenFromRequest(req);
+      if (!token) throw new BadRequestError("Invalid token");
+      return this.getTokenDto(token);
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   static getTokenDto(token: string): TokenDto | undefined {
-    let tokenDto;
     try {
       const tokenKey = SettingsConfig.getTokenKey();
-      if (tokenKey) {
-        tokenDto = jwt.verify(token, tokenKey) as TokenDto;
-      }
-    } catch (err) {
-      throw new Error("Invalid token");
+      const tokenDto = jwt.verify(token, tokenKey);
+      if (!tokenDto) throw new BadRequestError("Invalid token");
+      return tokenDto as TokenDto;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
     }
-    return tokenDto;
   }
 }

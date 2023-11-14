@@ -6,6 +6,7 @@ import userRoutes from "./routes/user.route";
 import apiRoutes from "./routes/api.route";
 import { DatabaseService } from "./services/database.service";
 import { SettingsConfig } from "./configs/settings.config";
+import { errorMiddleware } from "./middlewares/error.middleware";
 
 const app: Application = express();
 
@@ -14,8 +15,12 @@ app.use(express.urlencoded({ extended: true }));
 
 DatabaseService.connect();
 
+// Routes
 app.use("/user", userRoutes);
 app.use("/api", apiRoutes);
+
+// Middlewares
+app.use(errorMiddleware);
 
 const port = SettingsConfig.getPort() ?? 3000;
 app.listen(port, (err?: Error) => {

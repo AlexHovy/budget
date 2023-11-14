@@ -1,11 +1,8 @@
 import { Router } from "express";
-import { CategoryController } from "../controllers/category.controller";
-import { AuthMiddleware } from "../middlewares/auth.middleware";
 import { categoryController } from "../configs/di.config";
+import { verifyToken } from "../middlewares/auth.middleware";
 
 const router = Router();
-
-const verifyToken = AuthMiddleware.verifyToken;
 
 router.get("/category/", verifyToken, categoryController.get);
 router.get("/category/:id", verifyToken, categoryController.getById);

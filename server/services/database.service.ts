@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { SettingsConfig } from "../configs/settings.config";
+import { InternalServerError } from "../utils/error.util";
 
 export class DatabaseService {
   static async connect(): Promise<void> {
@@ -13,13 +14,9 @@ export class DatabaseService {
 
       await mongoose.connect(dbUri, dbOptions);
       console.log("MongoDB connected successfully");
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error(err.message);
-      } else {
-        console.error("An unknown error occurred during MongoDB connection");
-      }
-      process.exit(1);
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
     }
   }
 }

@@ -1,4 +1,5 @@
 import { SettingNames } from "../constants/setting-names";
+import { InternalServerError } from "../utils/error.util";
 
 export class SettingsConfig {
   static getPort(): number {
@@ -24,9 +25,8 @@ export class SettingsConfig {
 
   private static getEnvironmentVariable(key: string): string {
     const value = process.env[key];
-    if (!value) {
-      throw new Error(`Missing environment variable ${key}`);
-    }
+    if (!value)
+      throw new InternalServerError(`Missing environment variable ${key}`);
 
     return value;
   }

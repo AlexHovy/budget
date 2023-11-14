@@ -4,6 +4,7 @@ import { IUser } from "../models/user.model";
 import { TokenDto } from "../dtos/token.dto";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { SettingsConfig } from "../configs/settings.config";
+import { InternalServerError } from "../utils/error.util";
 
 export class UserService {
   constructor(private userRepository: IRepositoryService<IUser>) {}
@@ -27,8 +28,9 @@ export class UserService {
       userDto.token = token;
 
       return userDto;
-    } catch (err) {
-      throw err;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
     }
   }
 
@@ -44,22 +46,28 @@ export class UserService {
       userDto.token = token;
 
       return userDto;
-    } catch (err) {
-      throw err;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
     }
   }
 
-  private signToken(user: UserDto): string {
-    const tokenDto: TokenDto = {
-      userId: user.id,
-      userEmail: user.email,
-    };
+  private signToken(user: UserDto): string | undefined {
+    try {
+      const tokenDto: TokenDto = {
+        userId: user.id,
+        userEmail: user.email,
+      };
 
-    const tokenKey = SettingsConfig.getTokenKey();
-    const tokenExpiresIn = SettingsConfig.getTokenExpiresIn();
+      const tokenKey = SettingsConfig.getTokenKey();
+      const tokenExpiresIn = SettingsConfig.getTokenExpiresIn();
 
-    return jwt.sign(tokenDto, tokenKey, {
-      expiresIn: tokenExpiresIn,
-    });
+      return jwt.sign(tokenDto, tokenKey, {
+        expiresIn: tokenExpiresIn,
+      });
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 }

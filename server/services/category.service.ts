@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import { CategoryDto } from "../dtos/category.dto";
 import Category, { ICategory } from "../models/category.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
+import { InternalServerError } from "../utils/error.util";
 
 export class CategoryService {
   constructor(private categoryRepository: IRepositoryService<ICategory>) {}
@@ -12,11 +13,14 @@ export class CategoryService {
         parentCategoryId: categoryDto.parentCategoryId,
         name: categoryDto.name,
         description: categoryDto.description,
-        userId: new ObjectId(categoryDto.userId),
+        userId: categoryDto.userId
+          ? new ObjectId(categoryDto.userId)
+          : undefined,
       });
       return category.toDto();
-    } catch (err) {
-      throw err;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
     }
   }
 
@@ -30,16 +34,18 @@ export class CategoryService {
       });
       if (!category) return null;
       return category.toDto();
-    } catch (err) {
-      throw err;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
     }
   }
 
   async delete(id: string): Promise<void> {
     try {
       await this.categoryRepository.delete(id);
-    } catch (err) {
-      throw err;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
     }
   }
 }

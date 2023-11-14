@@ -1,26 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import { TokenHelper } from "../helpers/token.helper";
+import { BadRequestError, ForbiddenError } from "../utils/error.util";
 
-export class AuthMiddleware {
-  static verifyToken(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Response | void {
+export const verifyToken = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
     const token = TokenHelper.getTokenFromRequest(req);
-    if (!token) {
-      return res
-        .status(403)
-        .json({ error: "A token is required for authentication" });
-    }
+    if (!token) throw new ForbiddenError("Token is required");
 
-    try {
-      const tokenDto = TokenHelper.getTokenDto(token);
-      if (!tokenDto) throw new Error("Invalid token");
-    } catch (err) {
-      return res.status(401).json({ error: "Invalid token" });
-    }
+    const tokenDto = TokenHelper.getTokenDto(token);
+    if (!tokenDto) throw new BadRequestError("Invalid token");
 
     return next();
+  } catch (error) {
+    return next(error);
   }
-}
+};

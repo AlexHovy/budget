@@ -1,8 +1,11 @@
 import { Model } from "mongoose";
 import { IBase } from "../models/base.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
+import { InternalServerError } from "../utils/error.util";
 
-export class RepositoryService<T extends IBase> implements IRepositoryService<T> {
+export class RepositoryService<T extends IBase>
+  implements IRepositoryService<T>
+{
   private model: Model<T>;
 
   constructor(model: Model<T>) {
@@ -10,36 +13,76 @@ export class RepositoryService<T extends IBase> implements IRepositoryService<T>
   }
 
   async findAll(): Promise<T[]> {
-    return this.model.find().exec();
+    try {
+      return this.model.find().exec();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   async findAllBy(filter: Partial<T>): Promise<T[]> {
-    return this.model.find(filter).exec();
+    try {
+      return this.model.find(filter).exec();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   async findOne(filter: Partial<T>): Promise<T | null> {
-    return this.model.findOne(filter as any).exec();
+    try {
+      return this.model.findOne(filter as any).exec();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   async findById(id: string): Promise<T | null> {
-    return this.model.findById(id).exec();
+    try {
+      return this.model.findById(id).exec();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   async exists(filter: Partial<T>): Promise<boolean> {
-    return !!this.model.exists(filter as any);
+    try {
+      return !!this.model.exists(filter as any);
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   async create(item: Partial<T>): Promise<T> {
-    item.createdAt = new Date();
-    return this.model.create(item);
+    try {
+      item.createdAt = new Date();
+      return this.model.create(item);
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   async update(id: string, item: Partial<T>): Promise<T | null> {
-    item.updatedAt = new Date();
-    return this.model.findByIdAndUpdate(id, item, { new: true }).exec();
+    try {
+      item.updatedAt = new Date();
+      return this.model.findByIdAndUpdate(id, item, { new: true }).exec();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   async delete(id: string): Promise<T | null> {
-    return this.model.findByIdAndRemove(id).exec();
+    try {
+      return this.model.findByIdAndRemove(id).exec();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 }
