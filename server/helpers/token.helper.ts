@@ -5,7 +5,7 @@ import { SettingsConfig } from "../configs/settings.config";
 import { BadRequestError, InternalServerError } from "../utils/error.util";
 
 export class TokenHelper {
-  static getTokenFromRequest(req: Request): string | undefined {
+  static getTokenFromRequest(req: Request): string {
     try {
       const token =
         (req.headers.authorization &&
@@ -21,7 +21,7 @@ export class TokenHelper {
     }
   }
 
-  static getTokenDtoFromRequest(req: Request): TokenDto | undefined {
+  static getTokenDtoFromRequest(req: Request): TokenDto {
     try {
       const token = this.getTokenFromRequest(req);
       if (!token) throw new BadRequestError("Invalid token");
@@ -32,7 +32,7 @@ export class TokenHelper {
     }
   }
 
-  static getTokenDto(token: string): TokenDto | undefined {
+  static getTokenDto(token: string): TokenDto {
     try {
       const tokenKey = SettingsConfig.getTokenKey();
       const tokenDto = jwt.verify(token, tokenKey);

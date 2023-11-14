@@ -1,5 +1,5 @@
 import { CategoryDto } from "../dtos/category.dto";
-import Category, { ICategory } from "../models/category.model";
+import { ICategory } from "../models/category.model";
 import { IRepositoryService } from "../services/interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
 
@@ -8,7 +8,9 @@ export class CategoryQuery {
 
   async getAll(userId: string): Promise<CategoryDto[]> {
     try {
-      const categories = await this.categoryRepository.findAllBy({ userId });
+      const categories = await this.categoryRepository.findAllBy({
+        userId: userId,
+      });
       return categories.map((category) => category.toDto());
     } catch (error) {
       const errorMessage = (error as Error).message;
@@ -16,9 +18,12 @@ export class CategoryQuery {
     }
   }
 
-  async getById(id: string): Promise<CategoryDto | null> {
+  async getById(id: string, userId: string): Promise<CategoryDto | null> {
     try {
-      const category = await this.categoryRepository.findById(id);
+      const category = await this.categoryRepository.findOne({
+        _id: id,
+        userId: userId,
+      });
       if (!category) return null;
       return category.toDto();
     } catch (error) {

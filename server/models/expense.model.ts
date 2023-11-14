@@ -1,9 +1,9 @@
 import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
 import { ExpenseDto } from "../dtos/expense.dto";
-import BaseSchema, { IBase } from "./base.model";
+import UserBaseSchema, { IUserBase } from "./bases/user-base.model";
 
-export interface IExpense extends IBase {
+export interface IExpense extends IUserBase {
   name: string;
   description?: string;
   amount: number;
@@ -20,14 +20,16 @@ const ExpenseSchema: Schema = new Schema(
     collection: TableNames.Expense,
   }
 );
-ExpenseSchema.add(BaseSchema);
+ExpenseSchema.add(UserBaseSchema);
 
 ExpenseSchema.methods.toDto = function (): ExpenseDto {
+  const userBaseDto = UserBaseSchema.methods.toDto.call(this);
   return {
     id: this._id.toString(),
     name: this.name,
     description: this.description,
     amount: this.amount,
+    ...userBaseDto,
   };
 };
 

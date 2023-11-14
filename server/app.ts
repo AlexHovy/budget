@@ -4,7 +4,7 @@ dotenv.config();
 import express, { Application } from "express";
 import userRoutes from "./routes/user.route";
 import apiRoutes from "./routes/api.route";
-import { DatabaseService } from "./services/database.service";
+import { connectDatabase } from "./configs/db.config";
 import { SettingsConfig } from "./configs/settings.config";
 import { errorMiddleware } from "./middlewares/error.middleware";
 
@@ -13,7 +13,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-DatabaseService.connect();
+connectDatabase();
 
 // Routes
 app.use("/user", userRoutes);

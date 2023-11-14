@@ -1,14 +1,12 @@
 import mongoose, { Schema, Model } from "mongoose";
-import { ObjectId } from "mongodb";
 import { TableNames } from "../constants/table-names";
 import { CategoryDto } from "../dtos/category.dto";
-import BaseSchema, { IBase } from "./base.model";
+import UserBaseSchema, { IUserBase } from "./bases/user-base.model";
 
-export interface ICategory extends IBase {
+export interface ICategory extends IUserBase {
   parentCategoryId?: string;
   name: string;
   description?: string;
-  userId: ObjectId;
   toDto: () => CategoryDto;
 }
 
@@ -17,26 +15,21 @@ const CategorySchema: Schema = new Schema(
     parentCategoryId: { type: String },
     name: { type: String, required: true },
     description: { type: String },
-    userId: {
-      type: ObjectId,
-      required: true,
-    },
   },
   {
     collection: TableNames.Category,
   }
 );
-CategorySchema.add(BaseSchema);
+CategorySchema.add(UserBaseSchema);
 
 CategorySchema.methods.toDto = function (): CategoryDto {
+  const userBaseDto = UserBaseSchema.methods.toDto.call(this);
   return {
     id: this._id.toString(),
     parentCategoryId: this.parentCategoryId,
     name: this.name,
     description: this.description,
-    userId: this.userId.toString(),
-    createdAt: this.createdAt,
-    updatedAt: this.updatedAt,
+    ...userBaseDto,
   };
 };
 

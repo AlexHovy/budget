@@ -1,7 +1,7 @@
 import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
 import { UserDto } from "../dtos/user.dto";
-import BaseSchema, { IBase } from "./base.model";
+import BaseSchema, { IBase } from "./bases/base.model";
 
 export interface IUser extends IBase {
   firstName: string;

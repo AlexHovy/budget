@@ -1,5 +1,5 @@
 import { FilterQuery } from "mongoose";
-import { IBase } from "../../models/base.model";
+import { IBase } from "../../models/bases/base.model";
 
 export interface IRepositoryService<T extends IBase> {
   findAll(): Promise<T[]>;

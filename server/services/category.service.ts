@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { CategoryDto } from "../dtos/category.dto";
-import Category, { ICategory } from "../models/category.model";
+import { ICategory } from "../models/category.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
 
@@ -40,9 +40,11 @@ export class CategoryService {
     }
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(categoryDto: CategoryDto): Promise<CategoryDto | null> {
     try {
-      await this.categoryRepository.delete(id);
+      const category = await this.categoryRepository.delete(categoryDto.id);
+      if (!category) return null;
+      return category.toDto();
     } catch (error) {
       const errorMessage = (error as Error).message;
       throw new InternalServerError(errorMessage);

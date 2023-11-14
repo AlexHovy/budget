@@ -1,5 +1,5 @@
 import { Model } from "mongoose";
-import { IBase } from "../models/base.model";
+import { IBase } from "../models/bases/base.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
 
@@ -79,7 +79,7 @@ export class RepositoryService<T extends IBase>
 
   async delete(id: string): Promise<T | null> {
     try {
-      return this.model.findByIdAndRemove(id).exec();
+      return this.model.findByIdAndDelete(id).exec();
     } catch (error) {
       const errorMessage = (error as Error).message;
       throw new InternalServerError(errorMessage);

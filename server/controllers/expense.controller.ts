@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { TokenHelper } from "../helpers/token.helper";
-import { categoryQuery, categoryService } from "../configs/di.config";
+import { expenseQuery, expenseService } from "../configs/di.config";
 import { NotFoundError } from "../utils/error.util";
 import { HttpStatusCode } from "../constants/http-status-codes";
-import { CategoryDto } from "../dtos/category.dto";
+import { ExpenseDto } from "../dtos/expense.dto";
 
-export class CategoryController {
+export class ExpenseController {
   async get(
     req: Request,
     res: Response,
@@ -13,7 +13,7 @@ export class CategoryController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-      const categories = await categoryQuery.getAll(tokenDto.userId);
+      const categories = await expenseQuery.getAll(tokenDto.userId);
       return res.status(HttpStatusCode.OK).json(categories);
     } catch (error) {
       return next(error);
@@ -27,13 +27,13 @@ export class CategoryController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-      const category = await categoryQuery.getById(
+      const expense = await expenseQuery.getById(
         req.params.id,
         tokenDto.userId
       );
-      if (!category) throw new NotFoundError("Category not found");
+      if (!expense) throw new NotFoundError("Expense not found");
 
-      return res.status(HttpStatusCode.OK).json(category);
+      return res.status(HttpStatusCode.OK).json(expense);
     } catch (error) {
       return next(error);
     }
@@ -47,11 +47,11 @@ export class CategoryController {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
 
-      const body = req.body as CategoryDto;
+      const body = req.body as ExpenseDto;
       body.userId = tokenDto.userId;
 
-      const category = await categoryService.create(body);
-      return res.status(HttpStatusCode.CREATED).json(category);
+      const expense = await expenseService.create(body);
+      return res.status(HttpStatusCode.CREATED).json(expense);
     } catch (error) {
       return next(error);
     }
@@ -64,18 +64,18 @@ export class CategoryController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-      let category = await categoryQuery.getById(
+      let expense = await expenseQuery.getById(
         req.params.id,
         tokenDto.userId
       );
-      if (!category) throw new NotFoundError("Category not found");
+      if (!expense) throw new NotFoundError("Expense not found");
 
-      const body = req.body as CategoryDto;
-      category.name = body.name;
-      category.description = body.description;
+      const body = req.body as ExpenseDto;
+      expense.name = body.name;
+      expense.description = body.description;
 
-      category = await categoryService.update(category);
-      return res.status(HttpStatusCode.OK).json(category);
+      expense = await expenseService.update(expense);
+      return res.status(HttpStatusCode.OK).json(expense);
     } catch (error) {
       return next(error);
     }
@@ -88,14 +88,14 @@ export class CategoryController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-      let category = await categoryQuery.getById(
+      let expense = await expenseQuery.getById(
         req.params.id,
         tokenDto.userId
       );
-      if (!category) throw new NotFoundError("Category not found");
+      if (!expense) throw new NotFoundError("Expense not found");
 
-      category = await categoryService.delete(category);
-      return res.status(HttpStatusCode.OK).json(category);
+      expense = await expenseService.delete(expense);
+      return res.status(HttpStatusCode.OK).json(expense);
     } catch (error) {
       return next(error);
     }
