@@ -94,6 +94,8 @@ export class CategoryController {
       );
       if (!category) throw new NotFoundError("Category not found");
 
+      // TODO: Remove child categories
+
       category = await categoryService.delete(category);
       return res.status(HttpStatusCode.OK).json(category);
     } catch (error) {

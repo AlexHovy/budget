@@ -57,7 +57,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Test Category 3\",\r\n    \"description\": \"\",\r\n    \"userId\": \"65523f053ec24b972e1a5719\"\r\n}",
+							"raw": "{\r\n    \"name\": \"test sub\",\r\n    \"description\": \"\",\r\n    \"parentCategoryId\": null\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -94,7 +94,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/api/category/6551032ad46250512c0898c3",
+							"raw": "http://localhost:8082/api/category/65539c8f9863d6c2bc4967ee",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -103,7 +103,7 @@
 							"path": [
 								"api",
 								"category",
-								"6551032ad46250512c0898c3"
+								"65539c8f9863d6c2bc4967ee"
 							]
 						}
 					},
@@ -114,17 +114,8 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Living Expenses\",\r\n    \"description\": \"All expenses related to survival\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8082/api/category/65511df073304a283b6d743c",
+							"raw": "http://localhost:8082/api/category/65539c8f9863d6c2bc4967ee",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -133,7 +124,133 @@
 							"path": [
 								"api",
 								"category",
-								"65511df073304a283b6d743c"
+								"65539c8f9863d6c2bc4967ee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Expense",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/expense",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"expense"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/expense/65525daee92c21730fb7924b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"expense",
+								"65525daee92c21730fb7924b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test Expense\",\r\n    \"description\": \"\",\r\n    \"amount\": 123.66\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/expense",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"expense"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Test Expense\",\r\n    \"description\": \"This is a test\",\r\n    \"amount\": 123.66\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/api/expense/65539dfd9863d6c2bc4967f9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"expense",
+								"65539dfd9863d6c2bc4967f9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8082/api/expense/65539dfd9863d6c2bc4967f9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"api",
+								"expense",
+								"65539dfd9863d6c2bc4967f9"
 							]
 						}
 					},
@@ -210,7 +327,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTUxZGI2NzY4OWJmM2E4ODZkYjQ0OGYiLCJ1c2VyRW1haWwiOiJhbGV4c2hvdnlAZ21haWwuY29tIiwiaWF0IjoxNjk5OTAyMjE2LCJleHAiOjE2OTk5MDk0MTZ9.cPWt2SQnz_g9LPXI6o_QXm8swDWC7JD7y_F4BoE78Yc",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTUxZGI2NzY4OWJmM2E4ODZkYjQ0OGYiLCJ1c2VyRW1haWwiOiJhbGV4c2hvdnlAZ21haWwuY29tIiwiaWF0IjoxNjk5OTc4MjMwLCJleHAiOjE2OTk5ODU0MzB9.afD6BNQUlN9TttjJS8yr6cmzS9hWXzm7PJeS4LSpWQk",
 				"type": "string"
 			}
 		]
