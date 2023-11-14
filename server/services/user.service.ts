@@ -3,8 +3,7 @@ import { UserDto } from "../dtos/user.dto";
 import { IUser } from "../models/user.model";
 import { TokenDto } from "../dtos/token.dto";
 import { IRepositoryService } from "./interfaces/repository.interface";
-
-const { TOKEN_KEY, TOKEN_EXPIRES_IN } = process.env;
+import { SettingsConfig } from "../configs/settings.config";
 
 export class UserService {
   constructor(private userRepository: IRepositoryService<IUser>) {}
@@ -51,18 +50,16 @@ export class UserService {
   }
 
   private signToken(user: UserDto): string {
-    if (!TOKEN_KEY) throw new Error("Missing TOKEN_KEY environment variable");
-
-    if (!TOKEN_EXPIRES_IN)
-      throw new Error("Missing TOKEN_EXPIRES_IN environment variable");
-
     const tokenDto: TokenDto = {
       userId: user.id,
       userEmail: user.email,
     };
 
-    return jwt.sign(tokenDto, TOKEN_KEY, {
-      expiresIn: TOKEN_EXPIRES_IN,
+    const tokenKey = SettingsConfig.getTokenKey();
+    const tokenExpiresIn = SettingsConfig.getTokenExpiresIn();
+
+    return jwt.sign(tokenDto, tokenKey, {
+      expiresIn: tokenExpiresIn,
     });
   }
 }

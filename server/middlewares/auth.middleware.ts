@@ -1,8 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
 import { TokenHelper } from "../helpers/token.helper";
-
-const { TOKEN_KEY } = process.env;
 
 export class AuthMiddleware {
   static verifyToken(
@@ -18,12 +15,8 @@ export class AuthMiddleware {
     }
 
     try {
-      if (TOKEN_KEY) {
-        const tokenDto = TokenHelper.getTokenDto(token);
-        if (!tokenDto) throw new Error("Invalid token");
-      } else {
-        throw new Error("Missing TOKEN_KEY environment variable");
-      }
+      const tokenDto = TokenHelper.getTokenDto(token);
+      if (!tokenDto) throw new Error("Invalid token");
     } catch (err) {
       return res.status(401).json({ error: "Invalid token" });
     }

@@ -1,8 +1,7 @@
 import { Request } from "express";
 import jwt from "jsonwebtoken";
 import { TokenDto } from "../dtos/token.dto";
-
-const { TOKEN_KEY } = process.env;
+import { SettingsConfig } from "../configs/settings.config";
 
 export class TokenHelper {
   static getTokenFromRequest(req: Request): string {
@@ -22,8 +21,9 @@ export class TokenHelper {
   static getTokenDto(token: string): TokenDto | undefined {
     let tokenDto;
     try {
-      if (TOKEN_KEY) {
-        tokenDto = jwt.verify(token, TOKEN_KEY) as TokenDto;
+      const tokenKey = SettingsConfig.getTokenKey();
+      if (tokenKey) {
+        tokenDto = jwt.verify(token, tokenKey) as TokenDto;
       }
     } catch (err) {
       throw new Error("Invalid token");

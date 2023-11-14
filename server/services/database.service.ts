@@ -1,15 +1,17 @@
 import mongoose from "mongoose";
-
-const { MONGO_URI, DB_NAME } = process.env;
+import { SettingsConfig } from "../configs/settings.config";
 
 export class DatabaseService {
   static async connect(): Promise<void> {
     try {
+      const dbUri = SettingsConfig.getDbUri();
+      const dbName = SettingsConfig.getDbName();
+
       const dbOptions = {
-        dbName: DB_NAME as string,
+        dbName: dbName,
       };
 
-      await mongoose.connect(MONGO_URI as string, dbOptions);
+      await mongoose.connect(dbUri, dbOptions);
       console.log("MongoDB connected successfully");
     } catch (err) {
       if (err instanceof Error) {
