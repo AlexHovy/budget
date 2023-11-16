@@ -15,12 +15,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8082/api/category",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/category",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"category"
@@ -35,16 +33,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8082/api/category/65525daee92c21730fb7924b",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/category/65539c819863d6c2bc4967ec",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"category",
-								"65525daee92c21730fb7924b"
+								"65539c819863d6c2bc4967ec"
 							]
 						}
 					},
@@ -65,12 +61,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/api/category",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/category",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"category"
@@ -94,12 +88,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/api/category/65539c8f9863d6c2bc4967ee",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/category/65539c8f9863d6c2bc4967ee",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"category",
@@ -115,12 +107,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8082/api/category/65539c8f9863d6c2bc4967ee",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/category/65539c8f9863d6c2bc4967ee",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"category",
@@ -141,12 +131,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8082/api/expense",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/expense",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"expense"
@@ -161,12 +149,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8082/api/expense/65525daee92c21730fb7924b",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/expense/65525daee92c21730fb7924b",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"expense",
@@ -191,12 +177,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/api/expense",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/expense",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"expense"
@@ -220,12 +204,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/api/expense/65539dfd9863d6c2bc4967f9",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/expense/65539dfd9863d6c2bc4967f9",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"expense",
@@ -241,12 +223,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8082/api/expense/65539dfd9863d6c2bc4967f9",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/api/expense/65539dfd9863d6c2bc4967f9",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"api",
 								"expense",
@@ -276,12 +256,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/user/register",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/user/register",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"user",
 								"register"
@@ -305,12 +283,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/user/login",
-							"protocol": "http",
+							"raw": "{{Endpoint}}/user/login",
 							"host": [
-								"localhost"
+								"{{Endpoint}}"
 							],
-							"port": "8082",
 							"path": [
 								"user",
 								"login"
@@ -327,7 +303,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTUxZGI2NzY4OWJmM2E4ODZkYjQ0OGYiLCJ1c2VyRW1haWwiOiJhbGV4c2hvdnlAZ21haWwuY29tIiwiaWF0IjoxNjk5OTc4MjMwLCJleHAiOjE2OTk5ODU0MzB9.afD6BNQUlN9TttjJS8yr6cmzS9hWXzm7PJeS4LSpWQk",
+				"value": "{{Token}}",
 				"type": "string"
 			}
 		]
@@ -350,6 +326,18 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "Endpoint",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "Token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTUxZGI2NzY4OWJmM2E4ODZkYjQ0OGYiLCJ1c2VyRW1haWwiOiJhbGV4c2hvdnlAZ21haWwuY29tIiwiaWF0IjoxNzAwMTE5OTU5LCJleHAiOjE3MDAxMjcxNTl9.0oUeaXVa5QqfkhH-LnVG4Se8KVw8pVWaJzihtwhKWDo",
+			"type": "string"
 		}
 	]
 }

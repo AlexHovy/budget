@@ -22,7 +22,7 @@ app.use("/api", apiRoutes);
 // Middlewares
 app.use(errorMiddleware);
 
-const port = SettingsConfig.getPort() ?? 3000;
+const port = SettingsConfig.getPort();
 app.listen(port, (err?: Error) => {
   if (err) {
     console.error(`Server could not start: ${err.message}`);
