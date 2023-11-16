@@ -43,4 +43,18 @@ export class TokenHelper {
       throw new InternalServerError(errorMessage);
     }
   }
+
+  static signToken(tokenDto: TokenDto): string | undefined {
+    try {
+      const tokenKey = SettingsConfig.getTokenKey();
+      const tokenExpiresIn = SettingsConfig.getTokenExpiresIn();
+
+      return jwt.sign(tokenDto, tokenKey, {
+        expiresIn: tokenExpiresIn,
+      });
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
+  }
 }

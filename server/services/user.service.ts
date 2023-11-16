@@ -5,6 +5,7 @@ import { TokenDto } from "../dtos/token.dto";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { SettingsConfig } from "../configs/settings.config";
 import { InternalServerError } from "../utils/error.util";
+import { TokenHelper } from "../helpers/token.helper";
 
 export class UserService {
   constructor(private userRepository: IRepositoryService<IUser>) {}
@@ -24,7 +25,11 @@ export class UserService {
       });
 
       const userDto = user.toDto();
-      const token = this.signToken(userDto);
+      const tokenDto: TokenDto = {
+        userId: userDto.id,
+        userEmail: userDto.email,
+      };
+      const token = TokenHelper.signToken(tokenDto);
       userDto.token = token;
 
       return userDto;
@@ -42,29 +47,14 @@ export class UserService {
       const userDto = user.toDto();
       await this.userRepository.update(userDto.id, user);
 
-      const token = this.signToken(userDto);
+      const tokenDto: TokenDto = {
+        userId: userDto.id,
+        userEmail: userDto.email,
+      };
+      const token = TokenHelper.signToken(tokenDto);
       userDto.token = token;
 
       return userDto;
-    } catch (error) {
-      const errorMessage = (error as Error).message;
-      throw new InternalServerError(errorMessage);
-    }
-  }
-
-  private signToken(user: UserDto): string | undefined {
-    try {
-      const tokenDto: TokenDto = {
-        userId: user.id,
-        userEmail: user.email,
-      };
-
-      const tokenKey = SettingsConfig.getTokenKey();
-      const tokenExpiresIn = SettingsConfig.getTokenExpiresIn();
-
-      return jwt.sign(tokenDto, tokenKey, {
-        expiresIn: tokenExpiresIn,
-      });
     } catch (error) {
       const errorMessage = (error as Error).message;
       throw new InternalServerError(errorMessage);
