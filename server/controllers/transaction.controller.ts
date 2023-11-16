@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { TokenHelper } from "../helpers/token.helper";
-import { expenseQuery, expenseService } from "../configs/di.config";
+import { transactionQuery, transactionService } from "../configs/di.config";
 import { NotFoundError } from "../utils/error.util";
 import { HttpStatusCode } from "../constants/http-status-codes";
-import { ExpenseDto } from "../dtos/expense.dto";
+import { TransactionDto } from "../dtos/transaction.dto";
 
-export class ExpenseController {
+export class TransactionController {
   async get(
     req: Request,
     res: Response,
@@ -13,8 +13,8 @@ export class ExpenseController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-      const categories = await expenseQuery.getAll(tokenDto.userId);
-      return res.status(HttpStatusCode.OK).json(categories);
+      const transactions = await transactionQuery.getAll(tokenDto.userId);
+      return res.status(HttpStatusCode.OK).json(transactions);
     } catch (error) {
       return next(error);
     }
@@ -27,13 +27,13 @@ export class ExpenseController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-      const expense = await expenseQuery.getById(
+      const transaction = await transactionQuery.getById(
         req.params.id,
         tokenDto.userId
       );
-      if (!expense) throw new NotFoundError("Expense not found");
+      if (!transaction) throw new NotFoundError("Transaction not found");
 
-      return res.status(HttpStatusCode.OK).json(expense);
+      return res.status(HttpStatusCode.OK).json(transaction);
     } catch (error) {
       return next(error);
     }
@@ -47,11 +47,11 @@ export class ExpenseController {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
 
-      const body = req.body as ExpenseDto;
+      const body = req.body as TransactionDto;
       body.userId = tokenDto.userId;
 
-      const expense = await expenseService.create(body);
-      return res.status(HttpStatusCode.CREATED).json(expense);
+      const transaction = await transactionService.create(body);
+      return res.status(HttpStatusCode.CREATED).json(transaction);
     } catch (error) {
       return next(error);
     }
@@ -64,18 +64,18 @@ export class ExpenseController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-      let expense = await expenseQuery.getById(
+      let transaction = await transactionQuery.getById(
         req.params.id,
         tokenDto.userId
       );
-      if (!expense) throw new NotFoundError("Expense not found");
+      if (!transaction) throw new NotFoundError("Transaction not found");
 
-      const body = req.body as ExpenseDto;
-      expense.name = body.name;
-      expense.description = body.description;
+      const body = req.body as TransactionDto;
+      transaction.name = body.name;
+      transaction.description = body.description;
 
-      expense = await expenseService.update(expense);
-      return res.status(HttpStatusCode.OK).json(expense);
+      transaction = await transactionService.update(transaction);
+      return res.status(HttpStatusCode.OK).json(transaction);
     } catch (error) {
       return next(error);
     }
@@ -88,14 +88,14 @@ export class ExpenseController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-      let expense = await expenseQuery.getById(
+      let transaction = await transactionQuery.getById(
         req.params.id,
         tokenDto.userId
       );
-      if (!expense) throw new NotFoundError("Expense not found");
+      if (!transaction) throw new NotFoundError("Transaction not found");
 
-      expense = await expenseService.delete(expense);
-      return res.status(HttpStatusCode.OK).json(expense);
+      transaction = await transactionService.delete(transaction);
+      return res.status(HttpStatusCode.OK).json(transaction);
     } catch (error) {
       return next(error);
     }
