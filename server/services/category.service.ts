@@ -7,15 +7,16 @@ import { InternalServerError } from "../utils/error.util";
 export class CategoryService {
   constructor(private categoryRepository: IRepositoryService<ICategory>) {}
 
-  async create(categoryDto: CategoryDto): Promise<CategoryDto | null> {
+  async create(
+    categoryDto: CategoryDto,
+    userId: string
+  ): Promise<CategoryDto | null> {
     try {
       const category = await this.categoryRepository.create({
         parentCategoryId: categoryDto.parentCategoryId,
         name: categoryDto.name,
         description: categoryDto.description,
-        userId: categoryDto.userId
-          ? new ObjectId(categoryDto.userId)
-          : undefined,
+        userId: new ObjectId(userId),
       });
       return category.toDto();
     } catch (error) {
@@ -30,7 +31,6 @@ export class CategoryService {
         parentCategoryId: categoryDto.parentCategoryId,
         name: categoryDto.name,
         description: categoryDto.description,
-        updatedAt: new Date(),
       });
       if (!category) return null;
       return category.toDto();

@@ -53,7 +53,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"test sub\",\r\n    \"description\": \"\",\r\n    \"parentCategoryId\": null\r\n}",
+							"raw": "{\r\n    \"name\": \"Expenses\",\r\n    \"description\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -169,7 +169,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Test Expense\",\r\n    \"description\": \"\",\r\n    \"amount\": 123.66\r\n}",
+							"raw": "{\r\n    \"categoryId\": \"65561eb539cbf3d3ea3a5c40\",\r\n    \"name\": \"BestMed Debit Order\",\r\n    \"description\": \"\",\r\n    \"amount\": 1901,\r\n    \"type\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -223,14 +223,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{Endpoint}}/api/transaction/65539dfd9863d6c2bc4967f9",
+							"raw": "{{Endpoint}}/api/transaction/6556222639cbf3d3ea3a5c55",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
 								"api",
 								"transaction",
-								"65539dfd9863d6c2bc4967f9"
+								"6556222639cbf3d3ea3a5c55"
 							]
 						}
 					},

@@ -46,11 +46,11 @@ export class TransactionController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-
       const body = req.body as TransactionDto;
-      body.userId = tokenDto.userId;
-
-      const transaction = await transactionService.create(body);
+      const transaction = await transactionService.create(
+        body,
+        tokenDto.userId
+      );
       return res.status(HttpStatusCode.CREATED).json(transaction);
     } catch (error) {
       return next(error);
@@ -71,8 +71,11 @@ export class TransactionController {
       if (!transaction) throw new NotFoundError("Transaction not found");
 
       const body = req.body as TransactionDto;
+      transaction.categoryId = body.categoryId;
+      transaction.type = body.type;
       transaction.name = body.name;
       transaction.description = body.description;
+      transaction.amount = body.amount;
 
       transaction = await transactionService.update(transaction);
       return res.status(HttpStatusCode.OK).json(transaction);

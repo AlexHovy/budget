@@ -42,7 +42,6 @@ export class UserService {
   async login(user: IUser): Promise<UserDto> {
     try {
       user.loggedInAt = new Date();
-      user.updatedAt = new Date();
 
       const userDto = user.toDto();
       await this.userRepository.update(userDto.id, user);

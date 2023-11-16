@@ -46,11 +46,8 @@ export class CategoryController {
   ): Promise<Response | void> {
     try {
       const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
-
       const body = req.body as CategoryDto;
-      body.userId = tokenDto.userId;
-
-      const category = await categoryService.create(body);
+      const category = await categoryService.create(body, tokenDto.userId);
       return res.status(HttpStatusCode.CREATED).json(category);
     } catch (error) {
       return next(error);
