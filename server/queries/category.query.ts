@@ -31,4 +31,20 @@ export class CategoryQuery {
       throw new InternalServerError(errorMessage);
     }
   }
+
+  async getAllChildrenByParentId(
+    parentId: string,
+    userId: string
+  ): Promise<CategoryDto[]> {
+    try {
+      const categories = await this.categoryRepository.findAllBy({
+        parentCategoryId: parentId,
+        userId: userId,
+      });
+      return categories.map((category) => category.toDto());
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
+  }
 }

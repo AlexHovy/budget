@@ -3,6 +3,7 @@ import { CategoryDto } from "../dtos/category.dto";
 import { ICategory } from "../models/category.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
+import { categoryQuery } from "../configs/di.config";
 
 export class CategoryService {
   constructor(private categoryRepository: IRepositoryService<ICategory>) {}
@@ -45,6 +46,28 @@ export class CategoryService {
       const category = await this.categoryRepository.delete(categoryDto.id);
       if (!category) return null;
       return category.toDto();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
+  }
+
+  async deleteChildren(
+    parentCategory: CategoryDto,
+    userId: string
+  ): Promise<void> {
+    try {
+      const categories = await categoryQuery.getAllChildrenByParentId(
+        parentCategory.id,
+        userId
+      );
+
+      for (const category of categories) {
+        await this.delete(category);
+
+        if (category.parentCategoryId)
+          await this.deleteChildren(category, userId);
+      }
     } catch (error) {
       const errorMessage = (error as Error).message;
       throw new InternalServerError(errorMessage);
