@@ -1,9 +1,9 @@
 import { Model } from "mongoose";
-import { IBase } from "../models/bases/base.model";
+import { IBaseModel } from "../models/bases/base.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
 
-export class RepositoryService<T extends IBase>
+export class RepositoryService<T extends IBaseModel>
   implements IRepositoryService<T>
 {
   private model: Model<T>;

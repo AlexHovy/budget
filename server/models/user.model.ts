@@ -1,9 +1,9 @@
 import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
 import { UserDto } from "../dtos/user.dto";
-import BaseSchema, { IBase } from "./bases/base.model";
+import BaseSchema, { IBaseModel } from "./bases/base.model";
 
-export interface IUser extends IBase {
+export interface IUser extends IBaseModel {
   firstName: string;
   lastName: string;
   email: string;

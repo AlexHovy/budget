@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import { BaseDto } from "../../dtos/bases/base.dto";
 
-export interface IBase extends Document {
+export interface IBaseModel extends Document {
   createdAt?: Date;
   updatedAt?: Date;
 }

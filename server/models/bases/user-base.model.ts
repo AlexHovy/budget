@@ -1,9 +1,9 @@
 import { Schema } from "mongoose";
 import { ObjectId } from "mongodb";
-import BaseSchema, { IBase } from "./base.model";
+import BaseSchema, { IBaseModel } from "./base.model";
 import { UserBaseDto } from "../../dtos/bases/user-base.dto";
 
-export interface IUserBase extends IBase {
+export interface IUserBase extends IBaseModel {
   userId: ObjectId;
 }
 
