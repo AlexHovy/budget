@@ -26,6 +26,8 @@ const UserSchema: Schema = new Schema(
 );
 UserSchema.add(BaseSchema);
 
+UserSchema.index({ loggedInAt: -1 });
+
 UserSchema.methods.toDto = function (): UserDto {
   return {
     id: this._id.toString(),

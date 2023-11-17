@@ -59,7 +59,6 @@ export class RepositoryService<T extends IBase>
 
   async create(item: Partial<T>): Promise<T> {
     try {
-      item.createdAt = new Date();
       return this.model.create(item);
     } catch (error) {
       const errorMessage = (error as Error).message;

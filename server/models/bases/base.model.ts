@@ -11,6 +11,9 @@ const BaseSchema = new Schema({
   updatedAt: { type: Date, default: Date.now },
 });
 
+BaseSchema.index({ createdAt: -1 });
+BaseSchema.index({ updatedAt: -1 });
+
 BaseSchema.methods.toDto = function (): BaseDto {
   return {
     id: this._id.toString(),
