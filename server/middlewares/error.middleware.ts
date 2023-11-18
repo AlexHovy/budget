@@ -1,12 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 import { BaseError, InternalServerError } from "../utils/error.util";
+import { logService } from "../configs/di.config";
 
-export const errorMiddleware = (
+export const errorMiddleware = async (
   err: BaseError,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  await logService.log(err);
+
   if (err instanceof BaseError) {
     res.status(err.httpCode).json({ error: err.name, message: err.message });
   } else {

@@ -11,6 +11,11 @@ import { CategoryService } from "../services/category.service";
 import { TransactionService } from "../services/transaction.service";
 import { RepositoryService } from "../services/repository.service";
 import { UserService } from "../services/user.service";
+import { Queue } from "../utils/queue.util";
+import { LogService } from "../services/log.service";
+
+// Core
+export const queue = new Queue();
 
 // Repositories
 export const userRepository = new RepositoryService(User);
@@ -26,6 +31,7 @@ export const transactionQuery = new TransactionQuery(transactionRepository);
 export const userService = new UserService(userRepository);
 export const categoryService = new CategoryService(categoryRepository);
 export const transactionService = new TransactionService(transactionRepository);
+export const logService = new LogService();
 
 // Controllers
 export const userController = new UserController();

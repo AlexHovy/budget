@@ -7,6 +7,10 @@ export class SettingsConfig {
     return parseInt(port);
   }
 
+  static getRabbitMQUri(): string {
+    return this.getEnvironmentVariable(SettingNames.RABBITMQ_URI);
+  }
+
   static getDbUri(): string {
     return this.getEnvironmentVariable(SettingNames.DB_URI);
   }
