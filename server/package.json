@@ -27,6 +27,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
+    "universal-analytics": "^0.5.3",
     "validation": "^0.0.1"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@types/jsonwebtoken": "^9.0.1",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.9.0",
+    "@types/universal-analytics": "^0.4.8",
     "nodemon": "^3.0.1",
     "ts-node": "^10.8.1",
     "typescript": "^5.2.2"

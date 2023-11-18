@@ -30,10 +30,10 @@ export const transactionQuery = new TransactionQuery(transactionRepository);
 
 // Services
 export const cahceService = new CacheService();
+export const logService = new LogService();
 export const userService = new UserService(userRepository);
 export const categoryService = new CategoryService(categoryRepository);
 export const transactionService = new TransactionService(transactionRepository);
-export const logService = new LogService();
 
 // Controllers
 export const userController = new UserController();

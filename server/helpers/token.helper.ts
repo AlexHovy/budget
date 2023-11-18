@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import { TokenDto } from "../dtos/token.dto";
 import { SettingsConfig } from "../configs/settings.config";
 import { BadRequestError, InternalServerError } from "../utils/error.util";
+import { cahceService, logService } from "../configs/di.config";
+import { CacheKeys } from "../constants/cache-keys";
 
 export class TokenHelper {
   static getTokenFromRequest(req: Request): string {
@@ -44,14 +46,28 @@ export class TokenHelper {
     }
   }
 
+  static getTokenDtoFromCache(): TokenDto | undefined {
+    try {
+      const tokenDto = cahceService.get<TokenDto>(CacheKeys.TOKEN_DTO);
+      return tokenDto;
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
+  }
+
   static signToken(tokenDto: TokenDto): string | undefined {
     try {
       const tokenKey = SettingsConfig.getTokenKey();
       const tokenExpiresIn = SettingsConfig.getTokenExpiresIn();
-
-      return jwt.sign(tokenDto, tokenKey, {
+      const token = jwt.sign(tokenDto, tokenKey, {
         expiresIn: tokenExpiresIn,
       });
+
+      cahceService.set<TokenDto>(CacheKeys.TOKEN_DTO, tokenDto);
+      // TODO: update log with token
+
+      return token;
     } catch (error) {
       const errorMessage = (error as Error).message;
       throw new InternalServerError(errorMessage);

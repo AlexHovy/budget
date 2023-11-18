@@ -5,4 +5,5 @@ export enum SettingNames {
   DB_NAME = "DB_NAME",
   TOKEN_KEY = "TOKEN_KEY",
   TOKEN_EXPIRES_IN = "TOKEN_EXPIRES_IN",
+  GA_TRACKING_ID = "GA_TRACKING_ID",
 }

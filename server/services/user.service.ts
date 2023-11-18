@@ -1,9 +1,7 @@
-import jwt from "jsonwebtoken";
 import { UserDto } from "../dtos/user.dto";
 import { IUser } from "../models/user.model";
 import { TokenDto } from "../dtos/token.dto";
 import { IRepositoryService } from "./interfaces/repository.interface";
-import { SettingsConfig } from "../configs/settings.config";
 import { InternalServerError } from "../utils/error.util";
 import { TokenHelper } from "../helpers/token.helper";
 

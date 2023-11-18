@@ -8,16 +8,35 @@ export class Queue<T> {
   private queueName: string | null = null;
   private handler: IBaseHandler<T> | null = null;
 
-  async init(handler: IBaseHandler<T>): Promise<void> {
-    this.queueName = this.getClassName(handler);
-    this.handler = handler;
+  constructor() {
+    this.init();
+  }
 
-    const uri = SettingsConfig.getRabbitMQUri();
-    const connection: Connection = await connect(uri);
-    this.channel = await connection.createChannel();
-    await this.channel.assertQueue(this.queueName);
+  private async init(): Promise<void> {
+    try {
+      const uri = SettingsConfig.getRabbitMQUri();
+      const connection: Connection = await connect(uri);
+      this.channel = await connection.createChannel();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
+  }
 
-    this.consumeMessages();
+  async setHandler(handler: IBaseHandler<T>): Promise<void> {
+    try {
+      this.queueName = this.getClassName(handler);
+      this.handler = handler;
+
+      if (!this.channel) return;
+
+      await this.channel.assertQueue(this.queueName);
+
+      this.consumeMessages();
+    } catch (error) {
+      const errorMessage = (error as Error).message;
+      throw new InternalServerError(errorMessage);
+    }
   }
 
   async enqueue(message: T): Promise<void> {

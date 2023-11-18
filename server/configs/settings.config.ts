@@ -27,6 +27,10 @@ export class SettingsConfig {
     return this.getEnvironmentVariable(SettingNames.TOKEN_EXPIRES_IN);
   }
 
+  static getGATrackingId(): string {
+    return this.getEnvironmentVariable(SettingNames.GA_TRACKING_ID);
+  }
+
   private static getEnvironmentVariable(key: string): string {
     const value = process.env[key];
     if (!value)
