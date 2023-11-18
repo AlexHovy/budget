@@ -3,6 +3,7 @@ import { HttpStatusCode } from "../constants/http-status-codes";
 
 export class BaseError extends Error {
   public readonly name: string;
+  public readonly description: string;
   public readonly httpCode: number;
   public readonly isOperational: boolean;
 
@@ -16,6 +17,7 @@ export class BaseError extends Error {
     Object.setPrototypeOf(this, new.target.prototype);
 
     this.name = name;
+    this.description = description;
     this.httpCode = httpCode;
     this.isOperational = isOperational;
 
