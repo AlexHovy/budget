@@ -1,9 +1,8 @@
-import { ObjectId } from "mongodb";
 import { CategoryDto } from "../dtos/category.dto";
 import { ICategory } from "../models/category.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
-import { categoryQuery } from "../configs/di.config";
+import { categoryQuery } from "../configs/dependency.config";
 
 export class CategoryService {
   constructor(private categoryRepository: IRepositoryService<ICategory>) {}
@@ -14,10 +13,10 @@ export class CategoryService {
   ): Promise<CategoryDto | null> {
     try {
       const category = await this.categoryRepository.create({
+        userId: userId,
         parentCategoryId: categoryDto.parentCategoryId,
         name: categoryDto.name,
         description: categoryDto.description,
-        userId: new ObjectId(userId),
       });
       return category.toDto();
     } catch (error) {

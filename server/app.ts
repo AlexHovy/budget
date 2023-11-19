@@ -2,25 +2,27 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import express, { Application } from "express";
-import userRoutes from "./routes/user.route";
 import apiRoutes from "./routes/api.route";
-import { connectDatabase } from "./configs/db.config";
 import { SettingsConfig } from "./configs/settings.config";
-import { errorMiddleware } from "./middlewares/error.middleware";
+import {
+  databaseConfig,
+  errorMiddleware,
+  firebaseConfig,
+} from "./configs/dependency.config";
 
 const app: Application = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-connectDatabase();
+databaseConfig.connect();
+firebaseConfig.connect();
 
 // Routes
-app.use("/user", userRoutes);
 app.use("/api", apiRoutes);
 
 // Middlewares
-app.use(errorMiddleware);
+app.use(errorMiddleware.handle);
 
 const port = SettingsConfig.getPort();
 app.listen(port, (err?: Error) => {

@@ -1,4 +1,5 @@
 export interface TokenDto {
   userId: string;
-  userEmail: string;
+  name: string;
+  email?: string;
 }

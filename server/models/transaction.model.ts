@@ -1,12 +1,11 @@
 import mongoose, { Schema, Model } from "mongoose";
-import { ObjectId } from "mongodb";
 import { TableNames } from "../constants/table-names";
 import { TransactionDto } from "../dtos/transaction.dto";
 import UserBaseSchema, { IUserBase } from "./bases/user-base.model";
 import { TransactionType } from "../constants/transaction-type";
 
 export interface ITransaction extends IUserBase {
-  categoryId?: ObjectId;
+  categoryId?: string;
   type: TransactionType;
   name: string;
   description?: string;
@@ -16,7 +15,7 @@ export interface ITransaction extends IUserBase {
 
 const TransactionSchema: Schema = new Schema(
   {
-    categoryId: { type: ObjectId },
+    categoryId: { type: String },
     type: { type: Number, required: true, default: TransactionType.Unknown },
     name: { type: String, required: true },
     description: { type: String },

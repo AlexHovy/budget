@@ -1,21 +1,19 @@
 import { Request } from "express";
-import jwt from "jsonwebtoken";
 import { TokenDto } from "../dtos/token.dto";
-import { SettingsConfig } from "../configs/settings.config";
-import { BadRequestError, InternalServerError } from "../utils/error.util";
-import { cahceService, logService } from "../configs/di.config";
+import { InternalServerError, UnauthorizedError } from "../utils/error.util";
+import { cahceService } from "../configs/dependency.config";
 import { CacheKeys } from "../constants/cache-keys";
+import * as admin from "firebase-admin";
 
 export class TokenHelper {
   static getTokenFromRequest(req: Request): string {
     try {
       const token =
-        (req.headers.authorization &&
-          req.headers.authorization.split(" ")[1]) ||
+        req.headers.authorization?.split("Bearer ")[1] ||
         req.headers["x-access-token"] ||
         req.query.token ||
         req.body.token;
-      if (!token) throw new BadRequestError("Invalid token");
+      if (!token) throw new UnauthorizedError();
       return token;
     } catch (error) {
       const errorMessage = (error as Error).message;
@@ -23,32 +21,11 @@ export class TokenHelper {
     }
   }
 
-  static getTokenDtoFromRequest(req: Request): TokenDto {
-    try {
-      const token = this.getTokenFromRequest(req);
-      if (!token) throw new BadRequestError("Invalid token");
-      return this.getTokenDto(token);
-    } catch (error) {
-      const errorMessage = (error as Error).message;
-      throw new InternalServerError(errorMessage);
-    }
-  }
-
-  static getTokenDto(token: string): TokenDto {
-    try {
-      const tokenKey = SettingsConfig.getTokenKey();
-      const tokenDto = jwt.verify(token, tokenKey);
-      if (!tokenDto) throw new BadRequestError("Invalid token");
-      return tokenDto as TokenDto;
-    } catch (error) {
-      const errorMessage = (error as Error).message;
-      throw new InternalServerError(errorMessage);
-    }
-  }
-
-  static getTokenDtoFromCache(): TokenDto | undefined {
+  static getTokenDto(): TokenDto {
     try {
       const tokenDto = cahceService.get<TokenDto>(CacheKeys.TOKEN_DTO);
+      if (!tokenDto) throw new UnauthorizedError();
+
       return tokenDto;
     } catch (error) {
       const errorMessage = (error as Error).message;
@@ -56,18 +33,18 @@ export class TokenHelper {
     }
   }
 
-  static signToken(tokenDto: TokenDto): string | undefined {
+  static async verifyToken(req: Request): Promise<void> {
     try {
-      const tokenKey = SettingsConfig.getTokenKey();
-      const tokenExpiresIn = SettingsConfig.getTokenExpiresIn();
-      const token = jwt.sign(tokenDto, tokenKey, {
-        expiresIn: tokenExpiresIn,
-      });
+      const token = this.getTokenFromRequest(req);
+      if (!token) throw new UnauthorizedError();
 
-      cahceService.set<TokenDto>(CacheKeys.TOKEN_DTO, tokenDto);
-      // TODO: update log with token
-
-      return token;
+      const decodedToken = await admin.auth().verifyIdToken(token);
+      const tokenDto: TokenDto = {
+        userId: decodedToken.uid,
+        name: decodedToken.name,
+        email: decodedToken.email,
+      };
+      await cahceService.set<TokenDto>(CacheKeys.TOKEN_DTO, tokenDto);
     } catch (error) {
       const errorMessage = (error as Error).message;
       throw new InternalServerError(errorMessage);

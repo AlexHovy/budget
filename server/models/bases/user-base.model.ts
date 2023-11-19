@@ -1,17 +1,13 @@
 import { Schema } from "mongoose";
-import { ObjectId } from "mongodb";
 import BaseSchema, { IBaseModel } from "./base.model";
 import { UserBaseDto } from "../../dtos/bases/user-base.dto";
 
 export interface IUserBase extends IBaseModel {
-  userId: ObjectId;
+  userId: String;
 }
 
 const UserBaseSchema = new Schema({
-  userId: {
-    type: ObjectId,
-    required: true,
-  },
+  userId: { type: String, required: true },
 });
 UserBaseSchema.add(BaseSchema);
 

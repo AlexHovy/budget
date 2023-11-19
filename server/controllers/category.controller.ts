@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { TokenHelper } from "../helpers/token.helper";
-import { categoryQuery, categoryService } from "../configs/di.config";
+import { categoryQuery, categoryService } from "../configs/dependency.config";
 import { NotFoundError } from "../utils/error.util";
 import { HttpStatusCode } from "../constants/http-status-codes";
 import { CategoryDto } from "../dtos/category.dto";
@@ -12,7 +12,7 @@ export class CategoryController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       const categories = await categoryQuery.getAll(tokenDto.userId);
       return res.status(HttpStatusCode.OK).json(categories);
     } catch (error) {
@@ -26,7 +26,7 @@ export class CategoryController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       const category = await categoryQuery.getById(
         req.params.id,
         tokenDto.userId
@@ -45,7 +45,7 @@ export class CategoryController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       const body = req.body as CategoryDto;
       const category = await categoryService.create(body, tokenDto.userId);
       return res.status(HttpStatusCode.CREATED).json(category);
@@ -60,7 +60,7 @@ export class CategoryController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       let category = await categoryQuery.getById(
         req.params.id,
         tokenDto.userId
@@ -84,7 +84,7 @@ export class CategoryController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       let category = await categoryQuery.getById(
         req.params.id,
         tokenDto.userId

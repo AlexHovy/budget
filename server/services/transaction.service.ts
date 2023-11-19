@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import { TransactionDto } from "../dtos/transaction.dto";
 import { ITransaction } from "../models/transaction.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
@@ -15,14 +14,12 @@ export class TransactionService {
   ): Promise<TransactionDto | null> {
     try {
       const transaction = await this.transactionRepository.create({
-        categoryId: transactionDto.categoryId
-          ? new ObjectId(transactionDto.categoryId)
-          : undefined,
+        userId: userId,
+        categoryId: transactionDto.categoryId,
         type: transactionDto.type,
         name: transactionDto.name,
         description: transactionDto.description,
         amount: transactionDto.amount,
-        userId: new ObjectId(userId),
       });
       return transaction.toDto();
     } catch (error) {
@@ -36,9 +33,7 @@ export class TransactionService {
       const transaction = await this.transactionRepository.update(
         transactionDto.id,
         {
-          categoryId: transactionDto.categoryId
-            ? new ObjectId(transactionDto.categoryId)
-            : undefined,
+          categoryId: transactionDto.categoryId,
           type: transactionDto.type,
           name: transactionDto.name,
           description: transactionDto.description,

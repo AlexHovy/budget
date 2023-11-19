@@ -33,14 +33,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Endpoint}}/api/category/65539c819863d6c2bc4967ec",
+							"raw": "{{Endpoint}}/api/category/655a53a2bb6d271cf290d5a7",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
 								"api",
 								"category",
-								"65539c819863d6c2bc4967ec"
+								"655a53a2bb6d271cf290d5a7"
 							]
 						}
 					},
@@ -53,7 +53,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Expenses\",\r\n    \"description\": \"\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Test Category\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -231,65 +231,6 @@
 								"api",
 								"transaction",
 								"6556222639cbf3d3ea3a5c55"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"Alex\",\r\n    \"lastName\": \"Hovy\",\r\n    \"email\": \"alexshovy@gmail.com\",\r\n    \"password\": \"P@ssword123\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Endpoint}}/user/register",
-							"host": [
-								"{{Endpoint}}"
-							],
-							"path": [
-								"user",
-								"register"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"alexshovy@gmail.com\",\r\n    \"password\": \"P@ssword123\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{Endpoint}}/user/login",
-							"host": [
-								"{{Endpoint}}"
-							],
-							"path": [
-								"user",
-								"login"
 							]
 						}
 					},

@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { TokenHelper } from "../helpers/token.helper";
-import { transactionQuery, transactionService } from "../configs/di.config";
+import {
+  transactionQuery,
+  transactionService,
+} from "../configs/dependency.config";
 import { NotFoundError } from "../utils/error.util";
 import { HttpStatusCode } from "../constants/http-status-codes";
 import { TransactionDto } from "../dtos/transaction.dto";
@@ -12,7 +15,7 @@ export class TransactionController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       const transactions = await transactionQuery.getAll(tokenDto.userId);
       return res.status(HttpStatusCode.OK).json(transactions);
     } catch (error) {
@@ -26,7 +29,7 @@ export class TransactionController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       const transaction = await transactionQuery.getById(
         req.params.id,
         tokenDto.userId
@@ -45,7 +48,7 @@ export class TransactionController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       const body = req.body as TransactionDto;
       const transaction = await transactionService.create(
         body,
@@ -63,7 +66,7 @@ export class TransactionController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       let transaction = await transactionQuery.getById(
         req.params.id,
         tokenDto.userId
@@ -90,7 +93,7 @@ export class TransactionController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const tokenDto = TokenHelper.getTokenDtoFromRequest(req);
+      const tokenDto = TokenHelper.getTokenDto();
       let transaction = await transactionQuery.getById(
         req.params.id,
         tokenDto.userId

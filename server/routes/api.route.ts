@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { categoryController, transactionController } from "../configs/di.config";
+import { categoryController, transactionController } from "../configs/dependency.config";
 import { verifyToken } from "../middlewares/auth.middleware";
 
 const router = Router();
