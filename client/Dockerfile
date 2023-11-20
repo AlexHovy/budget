@@ -1,6 +1,6 @@
 FROM node:latest
-WORKDIR /server
+WORKDIR /client
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 8080
+EXPOSE 3000

@@ -1,6 +1,19 @@
 version: '3'
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:latest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
   server:
+    container_name: budget-server
     build: ./server
     ports:
       - "8080:8080"
@@ -8,3 +21,20 @@ services:
       - ./server:/server
     environment:
       - NODE_ENV=production
+    command: npm start
+    depends_on:
+      - rabbitmq
+
+  client:
+    container_name: budget-client
+    build: ./client
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/client
+    command: npm start
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  rabbitmq_data:

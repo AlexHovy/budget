@@ -11,7 +11,6 @@ axiosInstance.interceptors.request.use(
     const auth = getAuth();
     const user = auth.currentUser;
     if (user) {
-        console.log(user);
       const token = await user.getIdToken();
       config.headers = config.headers || {};
       config.headers["Authorization"] = `Bearer ${token}`;

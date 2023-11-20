@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import cors from "cors";
 import express, { Application } from "express";
 import apiRoutes from "./routes/api.route";
 import { SettingsConfig } from "./configs/settings.config";
@@ -12,17 +13,18 @@ import {
 
 const app: Application = express();
 
+// Middlewares
+app.use(errorMiddleware.handle);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-databaseConfig.connect();
-firebaseConfig.connect();
 
 // Routes
 app.use("/api", apiRoutes);
 
-// Middlewares
-app.use(errorMiddleware.handle);
+// Connections
+databaseConfig.connect();
+firebaseConfig.connect();
 
 const port = SettingsConfig.getPort();
 app.listen(port, (err?: Error) => {
