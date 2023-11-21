@@ -1,7 +1,12 @@
 import { initializeApp } from "firebase/app";
+import {
+  browserLocalPersistence,
+  getAuth,
+  setPersistence,
+} from "firebase/auth";
 
 class FirebaseConfig {
-  constructor() {
+  static connect() {
     const firebaseConfig = {
       apiKey: "AIzaSyCxhXyhROAqVJsB1B2CHDzaQ40T5goTIVQ",
       authDomain: "budget-6c4bb.firebaseapp.com",
@@ -13,6 +18,9 @@ class FirebaseConfig {
     };
 
     initializeApp(firebaseConfig);
+
+    const auth = getAuth();
+    setPersistence(auth, browserLocalPersistence);
   }
 }
 

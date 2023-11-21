@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./Auth.css";
 import {
   AuthProvider,
@@ -22,6 +22,7 @@ import { LocalStorageService } from "../../services/local-storage.service";
 import { LocalStorageKeys } from "../../constants/local-storage-keys";
 import EmailSignIn from "./EmailSignIn";
 import OtherProvidersSignIn from "./OtherProvidersSignIn";
+import { useNavigate } from "react-router-dom";
 
 export const providerMap = {
   Google: new GoogleAuthProvider(),
@@ -36,6 +37,12 @@ const SignIn: React.FC = () => {
   const [password, setPassword] = useState("");
   const auth = getAuth();
 
+  const navigate = useNavigate();
+
+  const handleSuccessfulAuthentication = useCallback(() => {
+    navigate("/protected");
+  }, [navigate]);
+
   useEffect(() => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
       const emailFromStorage = LocalStorageService.get<string>(
@@ -45,13 +52,14 @@ const SignIn: React.FC = () => {
         signInWithEmailLink(auth, emailFromStorage, window.location.href)
           .then((result) => {
             LocalStorageService.remove(LocalStorageKeys.EmailForSignIn);
+            handleSuccessfulAuthentication();
           })
           .catch((error) => handleAuthError(error));
       }
     }
-  }, [auth]);
+  }, [auth, handleSuccessfulAuthentication]);
 
-  const handleSignIn = async (provider: AuthProvider) => {
+  const handleSignIn = useCallback(async (provider: AuthProvider) => {
     LocalStorageService.set<string>(
       LocalStorageKeys.SignInProviderId,
       provider.providerId
@@ -59,15 +67,17 @@ const SignIn: React.FC = () => {
 
     if (provider.providerId === EmailAuthProvider.PROVIDER_ID) {
       if (password) {
-        signInWithEmailAndPassword(auth, email, password).catch((error) => {
-          if (error.code === "auth/user-not-found") {
-            createUserWithEmailAndPassword(auth, email, password).catch(
-              (error) => handleAuthError(error)
-            );
-          } else {
-            handleAuthError(error);
-          }
-        });
+        signInWithEmailAndPassword(auth, email, password)
+          .then((result) => handleSuccessfulAuthentication())
+          .catch((error) => {
+            if (error.code === "auth/user-not-found") {
+              createUserWithEmailAndPassword(auth, email, password)
+                .then((result) => handleSuccessfulAuthentication())
+                .catch((error) => handleAuthError(error));
+            } else {
+              handleAuthError(error);
+            }
+          });
       } else {
         const actionCodeSettings: ActionCodeSettings = {
           handleCodeInApp: true,
@@ -83,23 +93,25 @@ const SignIn: React.FC = () => {
           .catch((error) => handleAuthError(error));
       }
     } else {
-      signInWithPopup(auth, provider).catch((error) => {
-        if (error.code === "auth/account-exists-with-different-credential") {
-          linkWithPopup(auth.currentUser!, provider).catch((error) =>
-            handleAuthError(error)
-          );
-        } else {
-          handleAuthError(error);
-        }
-      });
+      signInWithPopup(auth, provider)
+        .then((result) => handleSuccessfulAuthentication())
+        .catch((error) => {
+          if (error.code === "auth/account-exists-with-different-credential") {
+            linkWithPopup(auth.currentUser!, provider)
+              .then((result) => handleSuccessfulAuthentication())
+              .catch((error) => handleAuthError(error));
+          } else {
+            handleAuthError(error);
+          }
+        });
     }
-  };
+  }, [auth, email, password, handleSuccessfulAuthentication]);
 
   const previousProviderId = LocalStorageService.get<string>(
     LocalStorageKeys.SignInProviderId
   );
   const sortedProviderMap = Object.entries(providerMap)
-    .filter(([key, val]) => val.providerId != EmailAuthProvider.PROVIDER_ID)
+    .filter(([key, val]) => val.providerId !== EmailAuthProvider.PROVIDER_ID)
     .sort(([keyA, valA], [keyB, valB]) =>
       valA.providerId === previousProviderId
         ? -1
