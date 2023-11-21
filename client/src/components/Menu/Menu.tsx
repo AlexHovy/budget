@@ -1,15 +1,22 @@
 import React, { useState } from "react";
-import "./HamburgerMenu.css";
+import "./Menu.css";
 import { useAuth } from "../../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { AuthService } from "../../services/AuthService";
 
-const HamburgerMenu: React.FC = () => {
+const Menu: React.FC = () => {
+  const authService = new AuthService();
+
   const { isAuthenticated } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleSignOut = async () => {
+    await authService.signOut();
   };
 
   return (
@@ -21,6 +28,13 @@ const HamburgerMenu: React.FC = () => {
       {isOpen && (
         <div className="full-screen-menu">
           <ul>
+            {!isAuthenticated && (
+              <div>
+                <li>
+                  <a href="/login">Sign In</a>
+                </li>
+              </div>
+            )}
             <li>
               <a href="/">Home</a>
             </li>
@@ -28,6 +42,11 @@ const HamburgerMenu: React.FC = () => {
               <div>
                 <li>
                   <a href="/protected">Protected</a>
+                </li>
+                <li>
+                  <a href="" onClick={handleSignOut}>
+                    Sign Out
+                  </a>
                 </li>
               </div>
             )}
@@ -38,4 +57,4 @@ const HamburgerMenu: React.FC = () => {
   );
 };
 
-export default HamburgerMenu;
+export default Menu;

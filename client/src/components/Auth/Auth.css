@@ -36,16 +36,6 @@
   border-radius: 4px;
 }
 
-.SignIn,
-.SignOut {
-  width: fit-content;
-  background-color: #6c757d;
-}
-.SignIn:hover,
-.SignOut:hover {
-  background-color: #5a6268;
-}
-
 .Google {
   background-color: #db4437;
 }
