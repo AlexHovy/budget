@@ -4,10 +4,11 @@ import "./App.css";
 import { ProtectedRoute } from "../../utils/ProtectedRouteUtil";
 import { AuthProvider } from "../../contexts/AuthContext";
 import HomePage from "../../pages/HomePage/HomePage";
-import ProtectedPage from "../../pages/ProtectedPage/ProtectedPage";
+import CategoryPage from "../../pages/CategoryPage/CategoryPage";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import LoginPage from "../../pages/LoginPage/LoginPage";
+import { NavigationPages } from "../../constants/NavigationPages";
 
 const App: React.FC = () => {
   return (
@@ -15,11 +16,11 @@ const App: React.FC = () => {
       <Router>
         <Header />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path={NavigationPages.Home} element={<HomePage />} />
+          <Route path={NavigationPages.Login} element={<LoginPage />} />
           <Route
-            path="/protected"
-            element={<ProtectedRoute element={<ProtectedPage />} />}
+            path={NavigationPages.Category}
+            element={<ProtectedRoute element={<CategoryPage />} />}
           />
         </Routes>
         <Footer />

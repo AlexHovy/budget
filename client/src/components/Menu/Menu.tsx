@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { AuthService } from "../../services/AuthService";
+import { NavigationPages } from "../../constants/NavigationPages";
 
 const Menu: React.FC = () => {
   const authService = new AuthService();
@@ -31,17 +32,17 @@ const Menu: React.FC = () => {
             {!isAuthenticated && (
               <div>
                 <li>
-                  <a href="/login">Sign In</a>
+                  <a href={NavigationPages.Login}>Sign In</a>
                 </li>
               </div>
             )}
             <li>
-              <a href="/">Home</a>
+              <a href={NavigationPages.Home}>Home</a>
             </li>
             {isAuthenticated && (
               <div>
                 <li>
-                  <a href="/protected">Protected</a>
+                  <a href={NavigationPages.Category}>Category</a>
                 </li>
                 <li>
                   <a href="" onClick={handleSignOut}>

@@ -14,19 +14,20 @@ import {
 import { LocalStorageService } from "./LocalStorageService";
 import { LocalStorageKeys } from "../constants/LocalStorageKeys";
 import { handleError } from "../utils/ErrorHandlerUtil";
+import { NavigationPages } from "../constants/NavigationPages";
 
 export class AuthService {
   private auth = getAuth();
   private navigate = useNavigate();
 
   handleSuccessfulAuthentication = () => {
-    this.navigate("/protected");
+    this.navigate(NavigationPages.Dashboard);
   };
 
   signOut = async () => {
     try {
       await signOut(this.auth);
-      this.navigate("/");
+      this.navigate(NavigationPages.Home);
     } catch (error: any) {
       handleError(error);
     }
