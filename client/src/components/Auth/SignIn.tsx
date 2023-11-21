@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Auth.css";
 import {
   AuthProvider,
   getAuth,
@@ -17,13 +18,17 @@ import {
   ActionCodeSettings,
 } from "firebase/auth";
 import { handleAuthError } from "../../utils/error.handler";
+import { LocalStorageService } from "../../services/local-storage.service";
+import { LocalStorageKeys } from "../../constants/local-storage-keys";
+import EmailSignIn from "./EmailSignIn";
+import OtherProvidersSignIn from "./OtherProvidersSignIn";
 
-const providerMap = {
-  Email: new EmailAuthProvider(),
+export const providerMap = {
   Google: new GoogleAuthProvider(),
   GitHub: new GithubAuthProvider(),
   Facebook: new FacebookAuthProvider(),
   Twitter: new TwitterAuthProvider(),
+  Email: new EmailAuthProvider(),
 };
 
 const SignIn: React.FC = () => {
@@ -33,16 +38,25 @@ const SignIn: React.FC = () => {
 
   useEffect(() => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
-      const emailFromStorage = window.localStorage.getItem("emailForSignIn");
+      const emailFromStorage = LocalStorageService.get<string>(
+        LocalStorageKeys.EmailForSignIn
+      );
       if (emailFromStorage) {
-        signInWithEmailLink(auth, emailFromStorage, window.location.href).catch(
-          (error) => handleAuthError(error)
-        );
+        signInWithEmailLink(auth, emailFromStorage, window.location.href)
+          .then((result) => {
+            LocalStorageService.remove(LocalStorageKeys.EmailForSignIn);
+          })
+          .catch((error) => handleAuthError(error));
       }
     }
   }, [auth]);
 
   const handleSignIn = async (provider: AuthProvider) => {
+    LocalStorageService.set<string>(
+      LocalStorageKeys.SignInProviderId,
+      provider.providerId
+    );
+
     if (provider.providerId === EmailAuthProvider.PROVIDER_ID) {
       if (password) {
         signInWithEmailAndPassword(auth, email, password).catch((error) => {
@@ -61,7 +75,10 @@ const SignIn: React.FC = () => {
         };
         sendSignInLinkToEmail(auth, email, actionCodeSettings)
           .then((result) => {
-            window.localStorage.setItem("emailForSignIn", email);
+            LocalStorageService.set<string>(
+              LocalStorageKeys.EmailForSignIn,
+              email
+            );
           })
           .catch((error) => handleAuthError(error));
       }
@@ -78,25 +95,32 @@ const SignIn: React.FC = () => {
     }
   };
 
+  const previousProviderId = LocalStorageService.get<string>(
+    LocalStorageKeys.SignInProviderId
+  );
+  const sortedProviderMap = Object.entries(providerMap)
+    .filter(([key, val]) => val.providerId != EmailAuthProvider.PROVIDER_ID)
+    .sort(([keyA, valA], [keyB, valB]) =>
+      valA.providerId === previousProviderId
+        ? -1
+        : valB.providerId === previousProviderId
+        ? 1
+        : 0
+    );
+
   return (
     <div>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+      <OtherProvidersSignIn
+        sortedProviderMap={sortedProviderMap}
+        handleSignIn={handleSignIn}
       />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+      <EmailSignIn
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        handleSignIn={handleSignIn}
       />
-      {Object.entries(providerMap).map(([providerName, provider]) => (
-        <button key={providerName} onClick={() => handleSignIn(provider)}>
-          Sign in with {providerName}
-        </button>
-      ))}
     </div>
   );
 };

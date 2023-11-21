@@ -1,4 +1,5 @@
 import React from "react";
+import "./Auth.css";
 import { getAuth, signOut } from "firebase/auth";
 import { handleAuthError } from "../../utils/error.handler";
 
@@ -15,7 +16,7 @@ const SignOut: React.FC = () => {
 
   return (
     <div>
-      <button onClick={handleSignOut}>Sign Out</button>
+      <button className="button" onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 };
