@@ -1,10 +1,8 @@
+import AuthMethods from "../../components/Auth/AuthMethods";
 import "./LoginPage.css";
 
 function LoginPage() {
-  return (
-    <header className="App-header">
-    </header>
-  );
+  return <AuthMethods />;
 }
 
 export default LoginPage;

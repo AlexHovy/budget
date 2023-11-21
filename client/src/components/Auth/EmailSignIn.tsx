@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AuthProvider } from "firebase/auth";
-import { providerMap } from "./SignIn";
+import { providerMap } from "./AuthMethods";
 
 interface EmailSignInProps {
   email: string;
@@ -25,7 +25,7 @@ const EmailSignIn: React.FC<EmailSignInProps> = ({
   };
 
   return (
-    <div className="other-providers-sign-in">
+    <div className="provider-sign-in">
       <input
         className="input-field"
         type="email"

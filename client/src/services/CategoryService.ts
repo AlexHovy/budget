@@ -1,4 +1,4 @@
-import axiosInstance from "../interceptors/token.interceptor";
+import axiosInstance from "../interceptors/TokenInterceptor";
 
 export const getCategories = () => {
   // Example of using axiosInstance for an API call

@@ -2,7 +2,7 @@ import "./HomePage.css";
 
 function HomePage() {
   return (
-    <footer className="App-footer">
+    <footer className="footer">
     </footer>
   );
 }

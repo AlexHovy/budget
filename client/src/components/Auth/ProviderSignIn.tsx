@@ -1,19 +1,23 @@
 import React from "react";
 import { AuthProvider } from "firebase/auth";
 
-interface OtherProvidersSignInProps {
+interface ProviderSignInProps {
   sortedProviderMap: [string, AuthProvider][];
   handleSignIn: (provider: AuthProvider) => Promise<void>;
 }
 
-const OtherProvidersSignIn: React.FC<OtherProvidersSignInProps> = ({
+const ProviderSignIn: React.FC<ProviderSignInProps> = ({
   sortedProviderMap,
   handleSignIn,
 }) => {
   return (
-    <div className="other-providers-sign-in">
+    <div className="provider-sign-in">
       {sortedProviderMap.map(([providerName, provider]) => (
-        <button className={`button ${providerName}`} key={providerName} onClick={() => handleSignIn(provider)}>
+        <button
+          className={`button ${providerName}`}
+          key={providerName}
+          onClick={() => handleSignIn(provider)}
+        >
           Sign in with {providerName}
         </button>
       ))}
@@ -21,4 +25,4 @@ const OtherProvidersSignIn: React.FC<OtherProvidersSignInProps> = ({
   );
 };
 
-export default OtherProvidersSignIn;
+export default ProviderSignIn;

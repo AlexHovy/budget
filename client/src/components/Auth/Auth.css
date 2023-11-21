@@ -1,13 +1,12 @@
-.other-providers-sign-in {
+.provider-sign-in {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
   padding: 20px;
 }
 
 .button {
-  width: 80%;
+  width: 300px;
   padding: 10px;
   margin: 5px 0;
   border: none;
@@ -30,11 +29,21 @@
 
 .input-field {
   box-sizing: border-box;
-  width: 80%;
+  width: 300px;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.SignIn,
+.SignOut {
+  width: fit-content;
+  background-color: #6c757d;
+}
+.SignIn:hover,
+.SignOut:hover {
+  background-color: #5a6268;
 }
 
 .Google {

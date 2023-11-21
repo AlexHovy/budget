@@ -4,7 +4,7 @@ import {
   getAuth,
   setPersistence,
 } from "firebase/auth";
-import { SettingsConfig } from "./settings.config";
+import { SettingsConfig } from "./SettingsConfig";
 
 class FirebaseConfig {
   static connect() {

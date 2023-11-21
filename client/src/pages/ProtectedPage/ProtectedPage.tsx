@@ -2,7 +2,7 @@ import "./ProtectedPage.css";
 
 function ProtectedPage() {
   return (
-    <div>
+    <div className="aaaaa">
       sdfihsgdfjhges
     </div>
   );

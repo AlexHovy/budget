@@ -1,4 +1,4 @@
-import { SettingNames } from "../constants/setting-names";
+import { SettingNames } from "../constants/SettingNames";
 
 export class SettingsConfig {
   static getBaseUrl(): string {

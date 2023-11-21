@@ -1,6 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 import { getAuth } from "firebase/auth";
-import { SettingsConfig } from "../config/settings.config";
+import { SettingsConfig } from "../config/SettingsConfig";
 
 const axiosInstance = axios.create({
   baseURL: SettingsConfig.getBaseUrl(),
