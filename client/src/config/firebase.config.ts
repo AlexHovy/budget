@@ -4,17 +4,18 @@ import {
   getAuth,
   setPersistence,
 } from "firebase/auth";
+import { SettingsConfig } from "./settings.config";
 
 class FirebaseConfig {
   static connect() {
     const firebaseConfig = {
-      apiKey: "AIzaSyCxhXyhROAqVJsB1B2CHDzaQ40T5goTIVQ",
-      authDomain: "budget-6c4bb.firebaseapp.com",
-      projectId: "budget-6c4bb",
-      storageBucket: "budget-6c4bb.appspot.com",
-      messagingSenderId: "934035370716",
-      appId: "1:934035370716:web:df7b78b4bff226eabbba19",
-      measurementId: "G-YNF6TSPBTP",
+      apiKey: SettingsConfig.getFirebaseApiKey(),
+      authDomain: SettingsConfig.getFirebaseAuthDomain(),
+      projectId: SettingsConfig.getFirebaseProjectId(),
+      storageBucket: SettingsConfig.getFirebaseStorageBucket(),
+      messagingSenderId: SettingsConfig.getFirebaseMessagingSenderId(),
+      appId: SettingsConfig.getFirebaseAppId(),
+      measurementId: SettingsConfig.getFirebaseMeasurementId(),
     };
 
     initializeApp(firebaseConfig);
