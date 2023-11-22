@@ -26,6 +26,8 @@ const EmailSignIn: React.FC<EmailSignInProps> = ({
     setPassword("");
   };
 
+  const isSignInDisabled = email === "" || (usePassword && password === "");
+
   return (
     <div className="provider-sign-in">
       <Input
@@ -50,6 +52,7 @@ const EmailSignIn: React.FC<EmailSignInProps> = ({
       <Button
         className="sign-in-button Email"
         onClick={() => handleSignIn(providerMap.Email)}
+        disabled={isSignInDisabled}
       >
         {usePassword
           ? "Sign in/up with Email and Password"

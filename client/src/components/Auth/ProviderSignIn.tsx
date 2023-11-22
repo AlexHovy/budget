@@ -15,8 +15,8 @@ const ProviderSignIn: React.FC<ProviderSignInProps> = ({
     <div className="provider-sign-in">
       {sortedProviderMap.map(([providerName, provider]) => (
         <Button
-          className={`sign-in-button ${providerName}`}
           key={providerName}
+          className={`sign-in-button ${providerName}`}
           onClick={() => handleSignIn(provider)}
         >
           Sign in with {providerName}

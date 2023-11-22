@@ -41,7 +41,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
     (
       message: string,
       type = NotificationTypes.DEFAULT,
-      duration: number = 3000
+      duration: number = 4000
     ) => {
       setNotification({ message, isVisible: true, type });
       setTimeout(
