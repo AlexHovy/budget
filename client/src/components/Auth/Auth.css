@@ -12,36 +12,36 @@
 }
 
 .Google {
-  background-color: #db4437;
+  background-color: #db4437 !important;
 }
 .Google:hover {
-  background-color: #c1351d;
+  background-color: #c1351d !important;
 }
 
 .GitHub {
-  background-color: #333;
+  background-color: #333 !important;
 }
 .GitHub:hover {
-  background-color: #24292e;
+  background-color: #24292e !important;
 }
 
 .Facebook {
-  background-color: #3b5998;
+  background-color: #3b5998 !important;
 }
 .Facebook:hover {
-  background-color: #334d84;
+  background-color: #334d84 !important;
 }
 
 .Twitter {
-  background-color: #1da1f2;
+  background-color: #1da1f2 !important;
 }
 .Twitter:hover {
-  background-color: #1991da;
+  background-color: #1991da !important;
 }
 
 .Email {
-  background-color: #6c757d;
+  background-color: #6c757d !important;
 }
 .Email:hover {
-  background-color: #5a6268;
+  background-color: #5a6268 !important;
 }

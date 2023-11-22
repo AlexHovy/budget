@@ -1,14 +1,16 @@
 import { notificationEmitter } from "../config/EventsConfig";
 import { EventTypes } from "../constants/EventTypes";
 import axiosInstance from "../interceptors/TokenInterceptor";
-import { CategoryDto } from "@shared/dtos/category.dto";
+import { TransactionDto } from "@shared/dtos/transaction.dto";
 import { handleError } from "../utils/ErrorHandlerUtil";
 import { NotificationService } from "./NotificationService";
 
-export class CategoryService {
-  async get(): Promise<CategoryDto[]> {
+export class TransactionService {
+  async get(): Promise<TransactionDto[]> {
     try {
-      const response = await axiosInstance.get<CategoryDto[]>("/category");
+      const response = await axiosInstance.get<TransactionDto[]>(
+        "/transaction"
+      );
       return response.data;
     } catch (error) {
       handleError(error);
@@ -16,23 +18,10 @@ export class CategoryService {
     return [];
   }
 
-  async getById(id: string): Promise<CategoryDto | undefined> {
+  async getById(id: string): Promise<TransactionDto | undefined> {
     try {
-      const response = await axiosInstance.get<CategoryDto>(`/category/${id}`);
-      return response.data;
-    } catch (error) {
-      handleError(error);
-    }
-  }
-
-  async create(category: CategoryDto): Promise<CategoryDto | undefined> {
-    try {
-      const response = await axiosInstance.post<CategoryDto>(
-        "/category",
-        category
-      );
-      NotificationService.showSuccessNotification(
-        "Category created successfully!"
+      const response = await axiosInstance.get<TransactionDto>(
+        `/transaction/${id}`
       );
       return response.data;
     } catch (error) {
@@ -40,14 +29,33 @@ export class CategoryService {
     }
   }
 
-  async update(category: CategoryDto): Promise<CategoryDto | undefined> {
+  async create(
+    transaction: TransactionDto
+  ): Promise<TransactionDto | undefined> {
     try {
-      const response = await axiosInstance.put<CategoryDto>(
-        `/category/${category.id}`,
-        category
+      const response = await axiosInstance.post<TransactionDto>(
+        "/transaction",
+        transaction
       );
       NotificationService.showSuccessNotification(
-        "Category updated successfully!"
+        "Transaction created successfully!"
+      );
+      return response.data;
+    } catch (error) {
+      handleError(error);
+    }
+  }
+
+  async update(
+    transaction: TransactionDto
+  ): Promise<TransactionDto | undefined> {
+    try {
+      const response = await axiosInstance.put<TransactionDto>(
+        `/transaction/${transaction.id}`,
+        transaction
+      );
+      NotificationService.showSuccessNotification(
+        "Transaction updated successfully!"
       );
       return response.data;
     } catch (error) {
@@ -57,9 +65,9 @@ export class CategoryService {
 
   async delete(id: string): Promise<void> {
     try {
-      await axiosInstance.delete(`/category/${id}`);
+      await axiosInstance.delete(`/transaction/${id}`);
       NotificationService.showSuccessNotification(
-        "Category deleted successfully!"
+        "Transaction deleted successfully!"
       );
     } catch (error) {
       handleError(error);

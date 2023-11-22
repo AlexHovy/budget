@@ -30,17 +30,17 @@ const Menu: React.FC = () => {
         <div className="full-screen-menu">
           <ul>
             {!isAuthenticated && (
-              <div>
+              <>
                 <li>
                   <a href={NavigationPages.Login}>Sign In</a>
                 </li>
                 <li>
                   <a href={NavigationPages.Home}>Home</a>
                 </li>
-              </div>
+              </>
             )}
             {isAuthenticated && (
-              <div>
+              <>
                 <li>
                   <a href={NavigationPages.Dashboard}>Dashboard</a>
                 </li>
@@ -48,11 +48,14 @@ const Menu: React.FC = () => {
                   <a href={NavigationPages.Category}>Category</a>
                 </li>
                 <li>
+                  <a href={NavigationPages.Transaction}>Transaction</a>
+                </li>
+                <li>
                   <a href="" onClick={handleSignOut}>
                     Sign Out
                   </a>
                 </li>
-              </div>
+              </>
             )}
           </ul>
         </div>

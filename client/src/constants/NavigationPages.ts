@@ -3,4 +3,5 @@ export enum NavigationPages {
   Login = "/login",
   Dashboard = "/dashboard",
   Category = "/category",
+  Transaction = "/transaction",
 }
