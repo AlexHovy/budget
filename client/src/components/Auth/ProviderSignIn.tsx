@@ -1,5 +1,6 @@
 import React from "react";
 import { AuthProvider } from "firebase/auth";
+import Button from "../Button/Button";
 
 interface ProviderSignInProps {
   sortedProviderMap: [string, AuthProvider][];
@@ -13,13 +14,13 @@ const ProviderSignIn: React.FC<ProviderSignInProps> = ({
   return (
     <div className="provider-sign-in">
       {sortedProviderMap.map(([providerName, provider]) => (
-        <button
-          className={`button ${providerName}`}
+        <Button
+          className={`sign-in-button ${providerName}`}
           key={providerName}
           onClick={() => handleSignIn(provider)}
         >
           Sign in with {providerName}
-        </button>
+        </Button>
       ))}
     </div>
   );

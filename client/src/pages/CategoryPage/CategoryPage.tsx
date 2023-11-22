@@ -1,56 +1,92 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CategoryDto } from "../../interfaces/CategoryDto";
 import { CategoryService } from "../../services/CategoryService";
+import Table from "../../components/Table/Table";
+import Dialog from "../../components/Dialog/Dialog";
+import CategoryForm from "./Form/CategoryForm";
+import Button from "../../components/Button/Button";
 
-const CategoryPage = () => {
+const CategoryPage: React.FC = () => {
+  const categoryService = new CategoryService();
+
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<
+    CategoryDto | undefined
+  >(undefined);
   const [categories, setCategories] = useState<CategoryDto[]>([]);
-  const [error, setError] = useState<string | null>(null);
+
+  const columns = [
+    { title: "Name", render: (category: CategoryDto) => category.name },
+    {
+      title: "Description",
+      render: (category: CategoryDto) => category.description,
+    },
+  ];
 
   useEffect(() => {
-    fetchCategories();
+    loadCategories();
   }, []);
 
-  const fetchCategories = async () => {
-    try {
-      const service = new CategoryService();
-      const data = await service.get();
-      setCategories(data);
-    } catch (error) {
-      setError("Failed to fetch categories");
-      // Handle the error based on your requirements
+  const handleEdit = (category: CategoryDto | undefined) => {
+    setEditingCategory(category);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    setEditingCategory(undefined);
+  };
+
+  const loadCategories = async () => {
+    const data = await categoryService.get();
+    setCategories(data);
+  };
+
+  const handleCreate = async (category: CategoryDto) => {
+    const newCategory = await categoryService.create(category);
+    if (newCategory) setCategories([...categories, newCategory]);
+  };
+
+  const handleUpdate = async (category: CategoryDto) => {
+    const updatedCategory = await categoryService.update(category);
+    if (updatedCategory) {
+      setCategories(
+        categories.map((c) =>
+          c.id === updatedCategory.id ? updatedCategory : c
+        )
+      );
     }
   };
 
-  // Implement additional methods for getById, create, update, and delete here
+  const handleDelete = async (category: CategoryDto) => {
+    await categoryService.delete(category.id);
+    setCategories(categories.filter((c) => c.id !== category.id));
+  };
+
+  const handleSubmit = async (category: CategoryDto) => {
+    if (editingCategory) handleUpdate(category);
+    else handleCreate(category);
+
+    handleDialogClose();
+  };
 
   return (
     <div>
       <h1>Category Management</h1>
-      {error && <p>Error: {error}</p>}
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categories.map((category) => (
-            <tr key={category.id}>
-              <td>{category.id}</td>
-              <td>{category.name}</td>
-              <td>
-                {/* Add buttons or links for editing and deleting categories */}
-                <button>Edit</button>
-                <button>Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Here, you can add forms for creating and updating categories */}
+      <Button onClick={() => handleEdit(undefined)}>Add New Category</Button>
+      <Dialog
+        title={editingCategory ? "Edit Category" : "Add Category"}
+        open={isDialogOpen}
+        onClose={handleDialogClose}
+      >
+        <CategoryForm initialValues={editingCategory} onSubmit={handleSubmit} />
+      </Dialog>
+      <Table
+        data={categories}
+        columns={columns}
+        onUpdate={handleEdit}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };

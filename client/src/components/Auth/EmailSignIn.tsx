@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { AuthProvider } from "firebase/auth";
 import { providerMap } from "./AuthMethods";
+import Button from "../Button/Button";
+import Input from "../Input/Input";
 
 interface EmailSignInProps {
   email: string;
@@ -26,33 +28,36 @@ const EmailSignIn: React.FC<EmailSignInProps> = ({
 
   return (
     <div className="provider-sign-in">
-      <input
-        className="input-field"
+      <Input
+        className="sign-in-input-field"
         type="email"
-        placeholder="Email"
+        name="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
       />
       {usePassword && (
-        <input
-          className="input-field"
+        <Input
+          className="sign-in-input-field"
           type="password"
-          placeholder="Password"
+          name="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
         />
       )}
-      <button
-        className="button Email"
+      <Button
+        className="sign-in-button Email"
         onClick={() => handleSignIn(providerMap.Email)}
       >
         {usePassword
           ? "Sign in/up with Email and Password"
           : "Sign in with Email"}
-      </button>
-      <button className="button toggle" onClick={togglePasswordMode}>
+      </Button>
+      <Button className="sign-in-button toggle" onClick={togglePasswordMode}>
         {usePassword ? "Use Email-only Sign In" : "Use Password Sign In/Up"}
-      </button>
+      </Button>
     </div>
   );
 };
