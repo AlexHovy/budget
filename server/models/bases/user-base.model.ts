@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 import BaseSchema, { IBaseModel } from "./base.model";
-import { UserBaseDto } from "../../dtos/bases/user-base.dto";
+import { UserBaseDto } from "@shared/dtos/bases/user-base.dto";
 
 export interface IUserBase extends IBaseModel {
   userId: String;

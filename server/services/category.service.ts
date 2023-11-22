@@ -1,4 +1,4 @@
-import { CategoryDto } from "../dtos/category.dto";
+import { CategoryDto } from "@shared/dtos/category.dto";
 import { ICategory } from "../models/category.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";

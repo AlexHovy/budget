@@ -3,7 +3,7 @@ import { TokenHelper } from "../helpers/token.helper";
 import { categoryQuery, categoryService } from "../configs/dependency.config";
 import { NotFoundError } from "../utils/error.util";
 import { HttpStatusCode } from "../constants/http-status-codes";
-import { CategoryDto } from "../dtos/category.dto";
+import { CategoryDto } from "@shared/dtos/category.dto";
 
 export class CategoryController {
   async get(

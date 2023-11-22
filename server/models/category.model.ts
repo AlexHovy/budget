@@ -1,6 +1,6 @@
 import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
-import { CategoryDto } from "../dtos/category.dto";
+import { CategoryDto } from "@shared/dtos/category.dto";
 import UserBaseSchema, { IUserBase } from "./bases/user-base.model";
 
 export interface ICategory extends IUserBase {

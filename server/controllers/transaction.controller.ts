@@ -6,7 +6,7 @@ import {
 } from "../configs/dependency.config";
 import { NotFoundError } from "../utils/error.util";
 import { HttpStatusCode } from "../constants/http-status-codes";
-import { TransactionDto } from "../dtos/transaction.dto";
+import { TransactionDto } from "@shared/dtos/transaction.dto";
 
 export class TransactionController {
   async get(

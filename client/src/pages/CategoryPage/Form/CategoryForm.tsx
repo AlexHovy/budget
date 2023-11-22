@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CategoryDto } from "../../../interfaces/CategoryDto";
+import { CategoryDto } from "@shared/dtos/category.dto";
 import Input from "../../../components/Input/Input";
 import TextArea from "../../../components/TextArea/TextArea";
 import Button from "../../../components/Button/Button";

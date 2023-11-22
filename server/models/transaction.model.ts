@@ -1,8 +1,8 @@
 import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
-import { TransactionDto } from "../dtos/transaction.dto";
+import { TransactionDto } from "@shared/dtos/transaction.dto";
 import UserBaseSchema, { IUserBase } from "./bases/user-base.model";
-import { TransactionType } from "../constants/transaction-type";
+import { TransactionType } from "@shared/constants/transaction-type";
 
 export interface ITransaction extends IUserBase {
   categoryId?: string;
