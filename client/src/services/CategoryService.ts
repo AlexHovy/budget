@@ -1,3 +1,5 @@
+import { notificationEmitter } from "../config/EventsConfig";
+import { EventTypes } from "../constants/EventTypes";
 import axiosInstance from "../interceptors/TokenInterceptor";
 import { CategoryDto } from "../interfaces/CategoryDto";
 import { handleError } from "../utils/ErrorHandlerUtil";
@@ -28,6 +30,7 @@ export class CategoryService {
         "/category",
         category
       );
+      notificationEmitter.emit(EventTypes.NOTIFICATION_SUCCESS, "Category created successfully!");
       return response.data;
     } catch (error) {
       handleError(error);
@@ -40,6 +43,7 @@ export class CategoryService {
         `/category/${category.id}`,
         category
       );
+      notificationEmitter.emit(EventTypes.NOTIFICATION_SUCCESS, "Category updated successfully!");
       return response.data;
     } catch (error) {
       handleError(error);
@@ -49,6 +53,7 @@ export class CategoryService {
   async delete(id: string): Promise<void> {
     try {
       await axiosInstance.delete(`/category/${id}`);
+      notificationEmitter.emit(EventTypes.NOTIFICATION_SUCCESS, "Category deleted successfully!");
     } catch (error) {
       handleError(error);
     }

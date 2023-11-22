@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./components/App/App";
 import reportWebVitals from "./reportWebVitals";
 import FirebaseConfig from "./config/FirebaseConfig";
+import { NotificationProvider } from "./contexts/NotificationContext";
+import NotificationListener from "./listeners/NotificationListener";
 
 FirebaseConfig.connect();
 
@@ -12,7 +14,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <NotificationProvider>
+      <NotificationListener />
+      <App />
+    </NotificationProvider>
   </React.StrictMode>
 );
 

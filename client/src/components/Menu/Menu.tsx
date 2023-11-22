@@ -34,13 +34,16 @@ const Menu: React.FC = () => {
                 <li>
                   <a href={NavigationPages.Login}>Sign In</a>
                 </li>
+                <li>
+                  <a href={NavigationPages.Home}>Home</a>
+                </li>
               </div>
             )}
-            <li>
-              <a href={NavigationPages.Home}>Home</a>
-            </li>
             {isAuthenticated && (
               <div>
+                <li>
+                  <a href={NavigationPages.Dashboard}>Dashboard</a>
+                </li>
                 <li>
                   <a href={NavigationPages.Category}>Category</a>
                 </li>
