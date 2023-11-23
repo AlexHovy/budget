@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button";
 import Dialog from "../../components/Dialog/Dialog";
 import TransactionForm from "./Form/TransactionForm";
 import Table from "../../components/Table/Table";
-import { TransactionTypeDisplayNames } from "../../constants/transaction-type";
+import { TransactionType } from "../../constants/transaction-type";
 
 const TransactionPage: React.FC = () => {
   const transactionService = new TransactionService();
@@ -15,28 +15,34 @@ const TransactionPage: React.FC = () => {
     TransactionDto | undefined
   >(undefined);
   const [categories, setCategories] = useState<TransactionDto[]>([]);
-  
+
   const columns = [
-    {
-      title: "Type",
-      render: (transaction: TransactionDto) => {
-        const typeDisplayName = TransactionTypeDisplayNames.find(
-          (type) => type.key === transaction.type
-        )?.value;
-        return typeDisplayName || "Unknown Type";
-      },
-    },
     {
       title: "Name",
       render: (transaction: TransactionDto) => transaction.name,
-    },
-    {
-      title: "Description",
-      render: (transaction: TransactionDto) => transaction.description,
+      renderDescription: (transaction: TransactionDto) =>
+        transaction.description,
     },
     {
       title: "Amount",
-      render: (transaction: TransactionDto) => transaction.amount,
+      className: (transaction: TransactionDto) => {
+        const className =
+          transaction.type === TransactionType.Unknown
+            ? "unknown"
+            : transaction.type === TransactionType.Income
+            ? "income"
+            : "expense";
+        return className;
+      },
+      render: (transaction: TransactionDto) => {
+        const prefix =
+          transaction.type === TransactionType.Unknown
+            ? ""
+            : transaction.type === TransactionType.Income
+            ? "+"
+            : "-";
+        return `${prefix}${transaction.amount.toFixed(2)}`;
+      },
     },
   ];
 

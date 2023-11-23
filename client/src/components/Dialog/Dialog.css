@@ -20,6 +20,13 @@
   max-width: 500px;
 }
 
+@media (max-width: 768px) {
+  .dialog {
+    min-width: 80%;
+    max-width: 80%;
+  }
+}
+
 .dialog h2 {
   margin: 0 0 20px;
   color: #333;

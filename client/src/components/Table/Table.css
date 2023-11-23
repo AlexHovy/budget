@@ -10,6 +10,28 @@
   text-align: left;
 }
 
+.table td {
+  position: relative;
+}
+
+.table .table-cell.unknown {
+}
+.table .table-cell.income {
+  color: green;
+}
+.table .table-cell.expense {
+  color: red;
+}
+
+.cell-main-content {
+}
+
+.cell-description {
+  font-size: 0.8em;
+  color: #666;
+  padding-top: 4px;
+}
+
 .table th {
   background-color: #f4f4f4;
 }

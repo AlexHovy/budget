@@ -1,10 +1,14 @@
 import React from "react";
 import "./Table.css";
 import Button from "../Button/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface TableColumn<T> {
   title: string;
+  className?: (item: T) => React.ReactNode;
   render: (item: T) => React.ReactNode;
+  renderDescription?: (item: T) => React.ReactNode;
 }
 
 interface TableProps<T> {
@@ -36,7 +40,19 @@ const Table = <T extends { id: string }>({
         {data.map((item) => (
           <tr key={item.id}>
             {columns.map((column, index) => (
-              <td key={index}>{column.render(item)}</td>
+              <td
+                key={index}
+                className={`table-cell ${
+                  column.className && column.className(item)
+                }`}
+              >
+                <div className="cell-main-content">{column.render(item)}</div>
+                {column.renderDescription && (
+                  <div className="cell-description">
+                    {column.renderDescription(item)}
+                  </div>
+                )}
+              </td>
             ))}
             {(onUpdate || onDelete) && (
               <td className="table-action-column">
@@ -45,7 +61,7 @@ const Table = <T extends { id: string }>({
                     className="table-button edit"
                     onClick={() => onUpdate(item)}
                   >
-                    Update
+                    <FontAwesomeIcon icon={faEdit} />
                   </Button>
                 )}
                 {onDelete && (
@@ -53,7 +69,7 @@ const Table = <T extends { id: string }>({
                     className="table-button delete"
                     onClick={() => onDelete(item)}
                   >
-                    Delete
+                    <FontAwesomeIcon icon={faTrash} />
                   </Button>
                 )}
               </td>
