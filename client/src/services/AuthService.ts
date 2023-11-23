@@ -15,8 +15,6 @@ import { LocalStorageService } from "./LocalStorageService";
 import { LocalStorageKeys } from "../constants/LocalStorageKeys";
 import { handleError } from "../utils/ErrorHandlerUtil";
 import { NavigationPages } from "../constants/NavigationPages";
-import { notificationEmitter } from "../config/EventsConfig";
-import { EventTypes } from "../constants/EventTypes";
 import { NotificationService } from "./NotificationService";
 
 export class AuthService {

@@ -1,5 +1,3 @@
-import { notificationEmitter } from "../config/EventsConfig";
-import { EventTypes } from "../constants/EventTypes";
 import axiosInstance from "../interceptors/TokenInterceptor";
 import { CategoryDto } from "@shared/dtos/category.dto";
 import { handleError } from "../utils/ErrorHandlerUtil";

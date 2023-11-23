@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { TransactionDto } from "@shared/dtos/transaction.dto";
 import { TransactionService } from "../../services/TransactionService";
-import Table from "../../components/Table/Table";
-import Dialog from "../../components/Dialog/Dialog";
+import Table from "@components/Table/Table";
+import Dialog from "@components/Dialog/Dialog";
 import TransactionForm from "./Form/TransactionForm";
-import Button from "../../components/Button/Button";
+import Button from "@components/Button/Button";
 
 const TransactionPage: React.FC = () => {
   const transactionService = new TransactionService();

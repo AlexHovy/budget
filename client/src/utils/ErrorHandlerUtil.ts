@@ -1,5 +1,3 @@
-import { notificationEmitter } from "../config/EventsConfig";
-import { EventTypes } from "../constants/EventTypes";
 import { NotificationService } from "../services/NotificationService";
 
 export const handleError = (error: any) => {

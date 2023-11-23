@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import Loader from "../components/Loader/Loader";
+import Loader from "@components/Loader/Loader";
 
 interface AuthContextType {
   isAuthenticated: boolean;
