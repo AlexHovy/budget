@@ -1,8 +1,8 @@
-import { CategoryDto } from "@shared/dtos/category.dto";
 import { ICategory } from "../models/category.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
 import { categoryQuery } from "../configs/dependency.config";
+import { CategoryDto } from "../dtos/category.dto";
 
 export class CategoryService {
   constructor(private categoryRepository: IRepositoryService<ICategory>) {}

@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { BaseDto } from "@shared/dtos/bases/base.dto";
+import { BaseDto } from "../../dtos/bases/base.dto";
 
 export interface IBaseModel extends Document {
   createdAt?: Date;

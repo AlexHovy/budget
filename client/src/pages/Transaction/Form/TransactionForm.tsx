@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { TransactionDto } from "@shared/dtos/transaction.dto";
+import { TransactionDto } from "../../../dtos/transaction.dto";
+import Dropdown from "../../../components/Dropdown/Dropdown";
 import Input from "../../../components/Input/Input";
 import TextArea from "../../../components/TextArea/TextArea";
 import Button from "../../../components/Button/Button";
-import { TransactionType } from "@shared/constants/transaction-type";
+import {
+  TransactionType,
+  TransactionTypeDisplayNames,
+} from "../../../constants/transaction-type";
 
 interface TransactionFormProps {
   initialValues?: TransactionDto | undefined;
@@ -15,11 +19,12 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
   onSubmit,
 }) => {
   const defaultTransaction = {
-    type: 0,
+    type: TransactionType.Unknown,
     name: "",
     description: "",
     amount: 0,
   } as TransactionDto;
+
   const [transaction, setTransaction] =
     useState<TransactionDto>(defaultTransaction);
 
@@ -33,6 +38,10 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
     setTransaction({ ...transaction, [e.target.name]: e.target.value });
   };
 
+  const handleTransactionTypeChange = (type: TransactionType) => {
+    setTransaction({ ...transaction, type });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (transaction) onSubmit(transaction);
@@ -40,6 +49,12 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit}>
+      <Dropdown<TransactionType>
+        name="type"
+        options={TransactionTypeDisplayNames}
+        selectedValue={transaction.type}
+        onChange={handleTransactionTypeChange}
+      />
       <Input
         name="name"
         value={transaction.name}
@@ -54,7 +69,8 @@ const TransactionForm: React.FC<TransactionFormProps> = ({
         placeholder="Description"
       />
       <Input
-        name="number"
+        type="number"
+        name="amount"
         value={transaction.amount}
         onChange={handleChange}
         placeholder="Amount"

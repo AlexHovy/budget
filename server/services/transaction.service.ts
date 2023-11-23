@@ -1,7 +1,7 @@
-import { TransactionDto } from "@shared/dtos/transaction.dto";
 import { ITransaction } from "../models/transaction.model";
 import { IRepositoryService } from "./interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
+import { TransactionDto } from "../dtos/transaction.dto";
 
 export class TransactionService {
   constructor(

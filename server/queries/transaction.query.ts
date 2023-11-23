@@ -1,10 +1,12 @@
-import { TransactionDto } from "@shared/dtos/transaction.dto";
+import { TransactionDto } from "../dtos/transaction.dto";
 import { ITransaction } from "../models/transaction.model";
 import { IRepositoryService } from "../services/interfaces/repository.interface";
 import { InternalServerError } from "../utils/error.util";
 
 export class TransactionQuery {
-  constructor(private transactionRepository: IRepositoryService<ITransaction>) {}
+  constructor(
+    private transactionRepository: IRepositoryService<ITransaction>
+  ) {}
 
   async getAll(userId: string): Promise<TransactionDto[]> {
     try {

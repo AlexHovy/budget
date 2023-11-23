@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { CategoryDto } from "@shared/dtos/category.dto";
 import { CategoryService } from "../../services/CategoryService";
-import Table from "@components/Table/Table";
-import Dialog from "@components/Dialog/Dialog";
+import { CategoryDto } from "../../dtos/category.dto";
+import Button from "../../components/Button/Button";
+import Dialog from "../../components/Dialog/Dialog";
 import CategoryForm from "./Form/CategoryForm";
-import Button from "@components/Button/Button";
+import Table from "../../components/Table/Table";
 
 const CategoryPage: React.FC = () => {
   const categoryService = new CategoryService();

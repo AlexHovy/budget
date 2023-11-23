@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useCallback } from "react";
-import Notification from "@components/Notification/Notification";
 import { NotificationTypes } from "../constants/NotificationTypes";
+import Notification from "../components/Notification/Notification";
 
 interface NotificationContextType {
   showMessage: (

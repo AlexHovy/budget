@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { TransactionDto } from "@shared/dtos/transaction.dto";
 import { TransactionService } from "../../services/TransactionService";
-import Table from "@components/Table/Table";
-import Dialog from "@components/Dialog/Dialog";
+import { TransactionDto } from "../../dtos/transaction.dto";
+import Button from "../../components/Button/Button";
+import Dialog from "../../components/Dialog/Dialog";
 import TransactionForm from "./Form/TransactionForm";
-import Button from "@components/Button/Button";
+import Table from "../../components/Table/Table";
+import { TransactionTypeDisplayNames } from "../../constants/transaction-type";
 
 const TransactionPage: React.FC = () => {
   const transactionService = new TransactionService();
@@ -14,11 +15,16 @@ const TransactionPage: React.FC = () => {
     TransactionDto | undefined
   >(undefined);
   const [categories, setCategories] = useState<TransactionDto[]>([]);
-
+  
   const columns = [
     {
       title: "Type",
-      render: (transaction: TransactionDto) => transaction.type,
+      render: (transaction: TransactionDto) => {
+        const typeDisplayName = TransactionTypeDisplayNames.find(
+          (type) => type.key === transaction.type
+        )?.value;
+        return typeDisplayName || "Unknown Type";
+      },
     },
     {
       title: "Name",

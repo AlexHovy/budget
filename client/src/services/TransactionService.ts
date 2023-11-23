@@ -1,5 +1,5 @@
+import { TransactionDto } from "../dtos/transaction.dto";
 import axiosInstance from "../interceptors/TokenInterceptor";
-import { TransactionDto } from "@shared/dtos/transaction.dto";
 import { handleError } from "../utils/ErrorHandlerUtil";
 import { NotificationService } from "./NotificationService";
 

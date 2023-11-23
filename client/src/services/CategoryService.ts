@@ -1,5 +1,5 @@
+import { CategoryDto } from "../dtos/category.dto";
 import axiosInstance from "../interceptors/TokenInterceptor";
-import { CategoryDto } from "@shared/dtos/category.dto";
 import { handleError } from "../utils/ErrorHandlerUtil";
 import { NotificationService } from "./NotificationService";
 

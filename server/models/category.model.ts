@@ -1,7 +1,7 @@
 import mongoose, { Schema, Model } from "mongoose";
 import { TableNames } from "../constants/table-names";
-import { CategoryDto } from "@shared/dtos/category.dto";
 import UserBaseSchema, { IUserBase } from "./bases/user-base.model";
+import { CategoryDto } from "../dtos/category.dto";
 
 export interface ICategory extends IUserBase {
   parentCategoryId?: string;
