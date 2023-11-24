@@ -13,12 +13,13 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
 
   server:
-    container_name: budget-server
+    container_name: budget_server
     build: ./server
     ports:
       - "8080:8080"
     volumes:
       - ./server:/server
+      - server_node_modules:/server/node_modules
     environment:
       - NODE_ENV=production
     command: npm start
@@ -26,15 +27,18 @@ services:
       - rabbitmq
 
   client:
-    container_name: budget-client
+    container_name: budget_client
     build: ./client
     ports:
       - "3000:3000"
     volumes:
       - ./client:/client
+      - client_node_modules:/client/node_modules
     command: npm start
     environment:
       - NODE_ENV=production
 
 volumes:
   rabbitmq_data:
+  client_node_modules:
+  server_node_modules:
