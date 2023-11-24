@@ -16,10 +16,10 @@ const CategoryPage: React.FC = () => {
   const [categories, setCategories] = useState<CategoryDto[]>([]);
 
   const columns = [
-    { title: "Name", render: (category: CategoryDto) => category.name },
     {
-      title: "Description",
-      render: (category: CategoryDto) => category.description,
+      title: "Name",
+      render: (category: CategoryDto) => category.name,
+      renderDescription: (transaction: CategoryDto) => transaction.description,
     },
   ];
 

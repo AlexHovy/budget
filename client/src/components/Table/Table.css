@@ -10,10 +10,6 @@
   text-align: left;
 }
 
-.table td {
-  position: relative;
-}
-
 .table .table-cell.unknown {
 }
 .table .table-cell.income {
