@@ -22,7 +22,7 @@ services:
       - server_node_modules:/server/node_modules
     environment:
       - NODE_ENV=production
-    command: npm start
+    command: ["./wait-for-it.sh", "rabbitmq:5672", "--", "npm", "start"]
     depends_on:
       - rabbitmq
 
