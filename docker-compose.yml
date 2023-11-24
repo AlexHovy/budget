@@ -13,7 +13,7 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
 
   server:
-    container_name: budget_server
+    container_name: budget-server
     build: ./server
     ports:
       - "8080:8080"
@@ -27,7 +27,7 @@ services:
       - rabbitmq
 
   client:
-    container_name: budget_client
+    container_name: budget-client
     build: ./client
     ports:
       - "3000:3000"
