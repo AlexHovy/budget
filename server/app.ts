@@ -1,15 +1,15 @@
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: "./config/.env" });
 
 import cors from "cors";
 import express, { Application } from "express";
-import apiRoutes from "./routes/api.route";
-import { SettingsConfig } from "./configs/settings.config";
+import apiRoutes from "./src/routes/api.route";
+import { SettingsConfig } from "./src/configs/settings.config";
 import {
   databaseConfig,
   errorMiddleware,
   firebaseConfig,
-} from "./configs/dependency.config";
+} from "./src/configs/dependency.config";
 
 const app: Application = express();
 

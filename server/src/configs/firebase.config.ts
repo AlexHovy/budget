@@ -1,6 +1,6 @@
 import { InternalServerError } from "../utils/error.util";
 import * as admin from "firebase-admin";
-import * as serviceAccount from "../data/serviceAccountKey.json";
+import * as serviceAccount from "../../config/firebase-service-account.json";
 
 export class FirebaseConfig {
   async connect() {
