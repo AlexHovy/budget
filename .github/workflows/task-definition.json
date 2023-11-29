@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-north-1:736187710965:task-definition/budget:3",
+    "taskDefinitionArn": "arn:aws:ecs:eu-north-1:736187710965:task-definition/budget:5",
     "containerDefinitions": [
         {
             "name": "budget",
-            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget",
+            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget:656f35a49140d33770f1407f2299e78590c3ab07",
             "cpu": 0,
             "portMappings": [
                 {
@@ -16,10 +16,8 @@
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -27,8 +25,7 @@
                     "awslogs-group": "/ecs/budget",
                     "awslogs-region": "eu-north-1",
                     "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
+                }
             }
         }
     ],
@@ -36,7 +33,7 @@
     "taskRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 3,
+    "revision": 5,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -82,7 +79,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-11-29T18:45:26.957Z",
-    "registeredBy": "arn:aws:iam::736187710965:root",
+    "registeredAt": "2023-11-29T19:33:08.408Z",
+    "registeredBy": "arn:aws:iam::736187710965:user/Alex_Hovy",
     "tags": []
 }
