@@ -47,12 +47,12 @@ jobs:
 
         # For the server service
         docker-compose build server
-        docker tag server:latest $ECR_REGISTRY/$ECR_REPOSITORY_SERVER:$IMAGE_TAG
+        docker tag docker.io/library/budget_server:latest $ECR_REGISTRY/$ECR_REPOSITORY_SERVER:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_SERVER:$IMAGE_TAG
 
         # For the client service
         docker-compose build client
-        docker tag client:latest $ECR_REGISTRY/$ECR_REPOSITORY_CLIENT:$IMAGE_TAG
+        docker tag docker.io/library/budget_client:latest $ECR_REGISTRY/$ECR_REPOSITORY_CLIENT:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_CLIENT:$IMAGE_TAG
 
         # Output the images' URIs
