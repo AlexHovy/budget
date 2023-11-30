@@ -6,6 +6,7 @@ on:
 
 env:
   AWS_REGION: eu-north-1
+  ECR_REPOSITORY_RABBITMQ: budget_rabbitmq
   ECR_REPOSITORY_SERVER: budget_server
   ECR_REPOSITORY_CLIENT: budget_client
   ECS_SERVICE: budget
@@ -45,6 +46,10 @@ jobs:
       run: |
         # Building and tagging each service
 
+        # For RabbitMQ service
+        docker tag rabbitmq:latest $ECR_REGISTRY/$ECR_REPOSITORY_RABBITMQ:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_RABBITMQ:$IMAGE_TAG
+
         # For the server service
         docker-compose build server
         docker tag docker.io/library/budget_server:latest $ECR_REGISTRY/$ECR_REPOSITORY_SERVER:$IMAGE_TAG
@@ -56,6 +61,7 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_CLIENT:$IMAGE_TAG
 
         # Output the images' URIs
+        echo "rabbitmq_image=$ECR_REGISTRY/$ECR_REPOSITORY_RABBITMQ:$IMAGE_TAG" >> $GITHUB_OUTPUT
         echo "server_image=$ECR_REGISTRY/$ECR_REPOSITORY_SERVER:$IMAGE_TAG" >> $GITHUB_OUTPUT
         echo "client_image=$ECR_REGISTRY/$ECR_REPOSITORY_CLIENT:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
