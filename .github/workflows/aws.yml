@@ -47,7 +47,8 @@ jobs:
         # Building and tagging each service
 
         # For RabbitMQ service
-        docker tag rabbitmq:latest $ECR_REGISTRY/$ECR_REPOSITORY_RABBITMQ:$IMAGE_TAG
+        docker-compose build rabbitmq
+        docker tag docker.io/library/budget_rabbitmq:latest $ECR_REGISTRY/$ECR_REPOSITORY_RABBITMQ:$IMAGE_TAG
         docker push $ECR_REGISTRY/$ECR_REPOSITORY_RABBITMQ:$IMAGE_TAG
 
         # For the server service
