@@ -44,20 +44,20 @@ jobs:
         IMAGE_TAG: ${{ github.sha }}
       run: |
         # Building and tagging each service
-        
+
         # For the server service
         docker-compose build server
-        docker tag budget-server:latest $ECR_REGISTRY/ECR_REPOSITORY_SERVER:$IMAGE_TAG
-        docker push $ECR_REGISTRY/ECR_REPOSITORY_SERVER:$IMAGE_TAG
+        docker tag budget-server:latest $ECR_REGISTRY/$ECR_REPOSITORY_SERVER:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_SERVER:$IMAGE_TAG
 
         # For the client service
         docker-compose build client
-        docker tag budget-client:latest $ECR_REGISTRY/ECR_REPOSITORY_CLIENT:$IMAGE_TAG
-        docker push $ECR_REGISTRY/ECR_REPOSITORY_CLIENT:$IMAGE_TAG
+        docker tag budget-client:latest $ECR_REGISTRY/$ECR_REPOSITORY_CLIENT:$IMAGE_TAG
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY_CLIENT:$IMAGE_TAG
 
         # Output the images' URIs
-        echo "server_image=$ECR_REGISTRY/ECR_REPOSITORY_SERVER:$IMAGE_TAG" >> $GITHUB_OUTPUT
-        echo "client_image=$ECR_REGISTRY/ECR_REPOSITORY_CLIENT:$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "server_image=$ECR_REGISTRY/$ECR_REPOSITORY_SERVER:$IMAGE_TAG" >> $GITHUB_OUTPUT
+        echo "client_image=$ECR_REGISTRY/$ECR_REPOSITORY_CLIENT:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
     # - name: Fill in the new image ID in the Amazon ECS task definition
     #   id: task-def
