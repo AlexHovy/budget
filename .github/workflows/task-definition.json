@@ -1,47 +1,39 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-north-1:736187710965:task-definition/budget:1",
+    "taskDefinitionArn": "arn:aws:ecs:eu-north-1:736187710965:task-definition/budget:5",
     "containerDefinitions": [
         {
             "name": "budget",
-            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget",
+            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget:656f35a49140d33770f1407f2299e78590c3ab07",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "budget-8080-tcp",
-                    "containerPort": 8080,
-                    "hostPort": 8080,
+                    "name": "budget-80-tcp",
+                    "containerPort": 80,
+                    "hostPort": 80,
                     "protocol": "tcp",
                     "appProtocol": "http"
-                },
-                {
-                    "name": "budget-3000-tcp",
-                    "containerPort": 3000,
-                    "hostPort": 3000,
-                    "protocol": "tcp"
                 }
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
-            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
                     "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/dev_task_definition",
+                    "awslogs-group": "/ecs/budget",
                     "awslogs-region": "eu-north-1",
                     "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
+                }
             }
         }
     ],
     "family": "budget",
+    "taskRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 1,
+    "revision": 5,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -56,6 +48,9 @@
         },
         {
             "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
         },
         {
             "name": "ecs.capability.execution-role-ecr-pull"
@@ -84,7 +79,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-11-29T09:45:43.410Z",
-    "registeredBy": "arn:aws:iam::736187710965:root",
+    "registeredAt": "2023-11-29T19:33:08.408Z",
+    "registeredBy": "arn:aws:iam::736187710965:user/Alex_Hovy",
     "tags": []
 }
