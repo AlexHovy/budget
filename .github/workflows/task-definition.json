@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:eu-north-1:736187710965:task-definition/budget:latest",
+    "family": "budget",
     "containerDefinitions": [
         {
             "name": "budget_rabbitmq",
-            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_rabbitmq:latest",
+            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_rabbitmq",
             "cpu": 0,
             "portMappings": [
                 {
@@ -21,11 +21,26 @@
                     "appProtocol": "http"
                 }
             ],
-            "essential": true
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/budget",
+                    "awslogs-region": "eu-north-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
         },
         {
             "name": "budget_server",
-            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_server:latest",
+            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_server",
             "cpu": 0,
             "portMappings": [
                 {
@@ -36,11 +51,25 @@
                     "appProtocol": "http"
                 }
             ],
-            "essential": true
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/budget",
+                    "awslogs-region": "eu-north-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
         },
         {
             "name": "budget_client",
-            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_client:latest",
+            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_client",
             "cpu": 0,
             "portMappings": [
                 {
@@ -51,10 +80,23 @@
                     "appProtocol": "http"
                 }
             ],
-            "essential": true
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-create-group": "true",
+                    "awslogs-group": "/ecs/budget",
+                    "awslogs-region": "eu-north-1",
+                    "awslogs-stream-prefix": "ecs"
+                },
+                "secretOptions": []
+            }
         }
     ],
-    "family": "budget",
     "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "requiresCompatibilities": [
