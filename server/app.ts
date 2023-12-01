@@ -26,7 +26,7 @@ app.use("/api", apiRoutes);
 databaseConfig.connect();
 firebaseConfig.connect();
 
-const port = SettingsConfig.getPort();
+const port = 8080;
 app.listen(port, (err?: Error) => {
   if (err) {
     console.error(`Server could not start: ${err.message}`);

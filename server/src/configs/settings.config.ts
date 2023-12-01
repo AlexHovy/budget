@@ -2,11 +2,6 @@ import { SettingNames } from "../constants/setting-names";
 import { InternalServerError } from "../utils/error.util";
 
 export class SettingsConfig {
-  static getPort(): number {
-    const port = this.getEnvironmentVariable(SettingNames.PORT);
-    return parseInt(port);
-  }
-
   static getRabbitMQUri(): string {
     return this.getEnvironmentVariable(SettingNames.RABBITMQ_URI);
   }
