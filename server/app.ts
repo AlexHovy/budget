@@ -4,7 +4,6 @@ dotenv.config({ path: "./config/.env" });
 import cors from "cors";
 import express, { Application } from "express";
 import apiRoutes from "./src/routes/api.route";
-import { SettingsConfig } from "./src/configs/settings.config";
 import {
   databaseConfig,
   errorMiddleware,

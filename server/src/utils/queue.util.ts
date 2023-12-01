@@ -1,7 +1,7 @@
 import { connect, Channel, Connection, ConsumeMessage } from "amqplib";
 import { IBaseHandler } from "../handlers/bases/base.handler";
 import { InternalServerError } from "./error.util";
-import { SettingsConfig } from "../configs/settings.config";
+import { settingsService } from "../configs/dependency.config";
 
 export class Queue<T> {
   private channel: Channel | null = null;
@@ -14,7 +14,7 @@ export class Queue<T> {
 
   private async init(): Promise<void> {
     try {
-      const uri = SettingsConfig.getRabbitMQUri();
+      const uri = await settingsService.getRabbitMQUri();
       const connection: Connection = await connect(uri);
       this.channel = await connection.createChannel();
     } catch (error) {

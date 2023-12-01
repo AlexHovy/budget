@@ -13,6 +13,12 @@ import { CacheService } from "../services/cache.service";
 import { ErrorMiddleware } from "../middlewares/error.middleware";
 import { DatabaseConfig } from "./database.config";
 import { FirebaseConfig } from "./firebase.config";
+import { AWSParameterStoreService } from "../services/aws-parameter-store.service";
+import { SettingsService } from "../services/settings.service";
+import { FileHelper } from "../helpers/file.helper";
+
+export const parameterStore = new AWSParameterStoreService();
+export const settingsService = new SettingsService();
 
 // Core
 export const queue = new Queue();
@@ -37,6 +43,9 @@ export const cahceService = new CacheService();
 export const logService = new LogService();
 export const categoryService = new CategoryService(categoryRepository);
 export const transactionService = new TransactionService(transactionRepository);
+
+// Helpers
+export const fileHelper = new FileHelper();
 
 // Controllers
 export const categoryController = new CategoryController();
