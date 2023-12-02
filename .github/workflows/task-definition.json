@@ -1,120 +1,148 @@
 {
-    "family": "budget",
-    "containerDefinitions": [
+  "containerDefinitions": [
+    {
+      "command": ["npm", "start"],
+      "environment": [
         {
-            "name": "budget_rabbitmq",
-            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_rabbitmq",
-            "cpu": 0,
-            "portMappings": [
-                {
-                    "name": "budget_rabbitmq-5672-tcp",
-                    "containerPort": 5672,
-                    "hostPort": 5672,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
-                },
-                {
-                    "name": "budget_rabbitmq-15672-tcp",
-                    "containerPort": 15672,
-                    "hostPort": 15672,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
-                }
-            ],
-            "essential": true,
-            "environment": [],
-            "environmentFiles": [],
-            "mountPoints": [],
-            "volumesFrom": [],
-            "ulimits": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/budget",
-                    "awslogs-region": "eu-north-1",
-                    "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
-            }
+          "name": "NODE_ENV",
+          "value": "production"
         },
         {
-            "name": "budget_server",
-            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_server",
-            "cpu": 0,
-            "portMappings": [
-                {
-                    "name": "budget_server-8080-tcp",
-                    "containerPort": 8080,
-                    "hostPort": 8080,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
-                }
-            ],
-            "essential": true,
-            "environment": [],
-            "environmentFiles": [],
-            "mountPoints": [],
-            "volumesFrom": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/budget",
-                    "awslogs-region": "eu-north-1",
-                    "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
-            }
+          "name": "REACT_APP_BASE_URL",
+          "value": "http://budget_server:8080/api"
         },
         {
-            "name": "budget_client",
-            "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_client",
-            "cpu": 0,
-            "portMappings": [
-                {
-                    "name": "budget_client-3000-tcp",
-                    "containerPort": 3000,
-                    "hostPort": 3000,
-                    "protocol": "tcp",
-                    "appProtocol": "http"
-                }
-            ],
-            "essential": true,
-            "environment": [
-                { "name": "REACT_APP_BASE_URL", "value": "http://budget_server:8080/api" },
-                { "name": "REACT_APP_FIREBASE_API_KEY", "value": "AIzaSyCxhXyhROAqVJsB1B2CHDzaQ40T5goTIVQ" },
-                { "name": "REACT_APP_FIREBASE_AUTH_DOMAIN", "value": "budget-6c4bb.firebaseapp.com" },
-                { "name": "REACT_APP_FIREBASE_PROJECT_ID", "value": "budget-6c4bb" },
-                { "name": "REACT_APP_FIREBASE_STORAGE_BUCKET", "value": "budget-6c4bb.appspot.com" },
-                { "name": "REACT_APP_FIREBASE_MESSAGING_SENDER_ID", "value": "934035370716" },
-                { "name": "REACT_APP_FIREBASE_APP_ID", "value": "1:934035370716:web:df7b78b4bff226eabbba19" },
-                { "name": "REACT_APP_FIREBASE_MEASUREMENT_ID", "value": "G-YNF6TSPBTP" }
-            ],
-            "environmentFiles": [],
-            "mountPoints": [],
-            "volumesFrom": [],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/budget",
-                    "awslogs-region": "eu-north-1",
-                    "awslogs-stream-prefix": "ecs"
-                },
-                "secretOptions": []
-            }
+          "name": "REACT_APP_FIREBASE_API_KEY",
+          "value": "AIzaSyCxhXyhROAqVJsB1B2CHDzaQ40T5goTIVQ"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_AUTH_DOMAIN",
+          "value": "budget-6c4bb.firebaseapp.com"
+        },
+        { "name": "REACT_APP_FIREBASE_PROJECT_ID", "value": "budget-6c4bb" },
+        {
+          "name": "REACT_APP_FIREBASE_STORAGE_BUCKET",
+          "value": "budget-6c4bb.appspot.com"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_MESSAGING_SENDER_ID",
+          "value": "934035370716"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_APP_ID",
+          "value": "1:934035370716:web:df7b78b4bff226eabbba19"
+        },
+        { "name": "REACT_APP_FIREBASE_MEASUREMENT_ID", "value": "G-YNF6TSPBTP" }
+      ],
+      "essential": true,
+      "mountPoints": [
+        {
+          "containerPath": "/client",
+          "sourceVolume": "_Client"
+        },
+        {
+          "containerPath": "/client/node_modules",
+          "sourceVolume": "Client_Node_Modules"
         }
-    ],
-    "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
-    "networkMode": "awsvpc",
-    "requiresCompatibilities": [
-        "FARGATE"
-    ],
-    "cpu": "1024",
-    "memory": "3072",
-    "runtimePlatform": {
-        "cpuArchitecture": "X86_64",
-        "operatingSystemFamily": "LINUX"
+      ],
+      "name": "client",
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000
+        }
+      ]
+    },
+    {
+      "environment": [
+        {
+          "name": "RABBITMQ_DEFAULT_USER",
+          "value": "guest"
+        },
+        {
+          "name": "RABBITMQ_DEFAULT_PASS",
+          "value": "guest"
+        }
+      ],
+      "essential": true,
+      "image": "rabbitmq:latest",
+      "mountPoints": [
+        {
+          "containerPath": "/var/lib/rabbitmq",
+          "sourceVolume": "Rabbitmq_Data"
+        }
+      ],
+      "name": "rabbitmq",
+      "portMappings": [
+        {
+          "containerPort": 5672,
+          "hostPort": 5672
+        },
+        {
+          "containerPort": 15672,
+          "hostPort": 15672
+        }
+      ]
+    },
+    {
+      "command": ["npm", "start"],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        }
+      ],
+      "essential": true,
+      "mountPoints": [
+        {
+          "containerPath": "/server",
+          "sourceVolume": "_Server"
+        },
+        {
+          "containerPath": "/server/node_modules",
+          "sourceVolume": "Server_Node_Modules"
+        }
+      ],
+      "name": "server",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080
+        }
+      ]
     }
+  ],
+  "family": "",
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "rabbitmq_data"
+      },
+      "name": "Rabbitmq_Data"
+    },
+    {
+      "host": {
+        "sourcePath": "./server"
+      },
+      "name": "_Server"
+    },
+    {
+      "host": {
+        "sourcePath": "server_node_modules"
+      },
+      "name": "Server_Node_Modules"
+    },
+    {
+      "host": {
+        "sourcePath": "./client"
+      },
+      "name": "_Client"
+    },
+    {
+      "host": {
+        "sourcePath": "client_node_modules"
+      },
+      "name": "Client_Node_Modules"
+    }
+  ]
 }

@@ -10,17 +10,17 @@ env:
   ECS_CLUSTER: budget
   ECS_TASK_DEFINITION: .github/workflows/task-definition.json
   # RabbitMQ
-  ECR_REPOSITORY_RABBITMQ: budget_rabbitmq
+  ECR_REPOSITORY_RABBITMQ: rabbitmq
   IMAGE_URI_RABBITMQ: ''
-  CONTAINER_NAME_RABBITMQ: budget_rabbitmq
+  CONTAINER_NAME_RABBITMQ: rabbitmq
   # Server
-  ECR_REPOSITORY_SERVER: budget_server
+  ECR_REPOSITORY_SERVER: server
   IMAGE_URI_SERVER: ''
-  CONTAINER_NAME_SERVER: budget_server
+  CONTAINER_NAME_SERVER: server
   # Client
-  ECR_REPOSITORY_CLIENT: budget_client
+  ECR_REPOSITORY_CLIENT: client
   IMAGE_URI_CLIENT: ''
-  CONTAINER_NAME_CLIENT: budget_client
+  CONTAINER_NAME_CLIENT: client
 
 permissions:
   contents: read
