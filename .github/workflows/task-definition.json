@@ -42,7 +42,16 @@
           "containerPort": 3000,
           "hostPort": 3000
         }
-      ]
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/budget",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     },
     {
       "environment": [
@@ -67,10 +76,19 @@
           "containerPort": 15672,
           "hostPort": 15672
         }
-      ]
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/budget",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     },
     {
-      "command": ["npm", "start"],
+      "command": ["./wait-for-it.sh", "budget_rabbitmq:5672", "--", "npm", "start"],
       "environment": [
         {
           "name": "NODE_ENV",
@@ -85,7 +103,16 @@
           "containerPort": 8080,
           "hostPort": 8080
         }
-      ]
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/budget",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
     }
   ],
   "family": "budget",
