@@ -9,7 +9,7 @@
         },
         {
           "name": "REACT_APP_BASE_URL",
-          "value": "http://localhost:8080/api"
+          "value": "http://budget_server:8080/api"
         },
         {
           "name": "REACT_APP_FIREBASE_API_KEY",
@@ -85,14 +85,20 @@
           "awslogs-region": "eu-north-1",
           "awslogs-stream-prefix": "ecs"
         }
-      }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "rabbitmq_data",
+          "containerPath": "/var/lib/rabbitmq"
+        }
+      ]
     },
     {
       "command": [
         "./wait-for-it.sh",
         "-t",
         "0",
-        "localhost:5672",
+        "budget_rabbitmq:5672",
         "--",
         "npm",
         "start"
@@ -104,7 +110,7 @@
         },
         {
           "name": "RABBITMQ_URI",
-          "value": "amqp://guest:guest@localhost:5672"
+          "value": "amqp://guest:guest@budget_rabbitmq:5672"
         },
         {
           "name": "DB_NAME",
@@ -140,5 +146,14 @@
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
-  }
+  },
+  "volumes": [
+    {
+      "name": "rabbitmq_data",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-12345678",
+        "transitEncryption": "ENABLED"
+      }
+    }
+  ]
 }
