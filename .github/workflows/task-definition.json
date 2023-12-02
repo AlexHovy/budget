@@ -88,11 +88,27 @@
       }
     },
     {
-      "command": ["./wait-for-it.sh", "budget_rabbitmq:5672", "--", "npm", "start"],
+      "command": [
+        "./wait-for-it.sh",
+        "-t",
+        "0",
+        "budget_rabbitmq:5672",
+        "--",
+        "npm",
+        "start"
+      ],
       "environment": [
         {
           "name": "NODE_ENV",
           "value": "production"
+        },
+        {
+          "name": "RABBITMQ_URI",
+          "value": "amqp://guest:guest@budget_rabbitmq:5672"
+        },
+        {
+          "name": "DB_NAME",
+          "value": "Budget"
         }
       ],
       "essential": true,

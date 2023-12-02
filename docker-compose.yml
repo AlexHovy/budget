@@ -20,9 +20,11 @@ services:
     volumes:
       - ./server:/server
       - server_node_modules:/server/node_modules
+      - ~/.aws:/root/.aws:ro
     environment:
-      - NODE_ENV=development
-    command: ["./wait-for-it.sh", "rabbitmq:5672", "--", "npm", "start"]
+      - NODE_ENV=production
+      - AWS_PROFILE=default
+    command: ["./wait-for-it.sh", "-t", "0", "rabbitmq:5672", "--", "npm", "start"]
 
   client:
     container_name: budget-client
@@ -34,7 +36,7 @@ services:
       - client_node_modules:/client/node_modules
     command: npm start
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
 
 volumes:
   rabbitmq_data:

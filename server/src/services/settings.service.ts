@@ -10,7 +10,7 @@ export class SettingsService {
   }
 
   async getRabbitMQUri(): Promise<string> {
-    return this.getEnvVar(SettingNames.RABBITMQ_URI);
+    return this.getLocalEnvVar(SettingNames.RABBITMQ_URI);
   }
 
   async getDbUri(): Promise<string> {
@@ -18,7 +18,7 @@ export class SettingsService {
   }
 
   async getDbName(): Promise<string> {
-    return this.getEnvVar(SettingNames.DB_NAME);
+    return this.getLocalEnvVar(SettingNames.DB_NAME);
   }
 
   async getFirebaseServiceAccount(): Promise<string> {
@@ -30,7 +30,6 @@ export class SettingsService {
   }
 
   private async getEnvVar(key: SettingNames): Promise<string> {
-    console.log("isLocal", this.isLocal);
     return this.isLocal
       ? this.getLocalEnvVar(key)
       : await this.getLiveEnvVar(key);
