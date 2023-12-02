@@ -35,6 +35,7 @@
         { "name": "REACT_APP_FIREBASE_MEASUREMENT_ID", "value": "G-YNF6TSPBTP" }
       ],
       "essential": true,
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_client",
       "mountPoints": [
         {
           "containerPath": "/client",
@@ -45,7 +46,7 @@
           "sourceVolume": "Client_Node_Modules"
         }
       ],
-      "name": "client",
+      "name": "budget_client",
       "portMappings": [
         {
           "containerPort": 3000,
@@ -65,14 +66,14 @@
         }
       ],
       "essential": true,
-      "image": "rabbitmq:latest",
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_rabbitmq",
       "mountPoints": [
         {
           "containerPath": "/var/lib/rabbitmq",
           "sourceVolume": "Rabbitmq_Data"
         }
       ],
-      "name": "rabbitmq",
+      "name": "budget_rabbitmq",
       "portMappings": [
         {
           "containerPort": 5672,
@@ -93,6 +94,7 @@
         }
       ],
       "essential": true,
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_server",
       "mountPoints": [
         {
           "containerPath": "/server",
@@ -103,7 +105,7 @@
           "sourceVolume": "Server_Node_Modules"
         }
       ],
-      "name": "server",
+      "name": "budget_server",
       "portMappings": [
         {
           "containerPort": 8080,
@@ -112,7 +114,16 @@
       ]
     }
   ],
-  "family": "",
+  "family": "budget",
+  "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "3072",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
   "volumes": [
     {
       "host": {
