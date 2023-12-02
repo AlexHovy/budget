@@ -51,7 +51,13 @@
           "awslogs-region": "eu-north-1",
           "awslogs-stream-prefix": "ecs"
         }
-      }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "budget_client_data",
+          "containerPath": "/var/lib/client"
+        }
+      ]
     },
     {
       "environment": [
@@ -88,7 +94,7 @@
       },
       "mountPoints": [
         {
-          "sourceVolume": "rabbitmq_data",
+          "sourceVolume": "budget_rabbitmq_data",
           "containerPath": "/var/lib/rabbitmq"
         }
       ]
@@ -134,7 +140,13 @@
           "awslogs-region": "eu-north-1",
           "awslogs-stream-prefix": "ecs"
         }
-      }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "budget_server_data",
+          "containerPath": "/var/lib/server"
+        }
+      ]
     }
   ],
   "family": "budget",
@@ -149,9 +161,23 @@
   },
   "volumes": [
     {
-      "name": "rabbitmq_data",
+      "name": "budget_rabbitmq_data",
       "efsVolumeConfiguration": {
-        "fileSystemId": "fs-12345678",
+        "fileSystemId": "fs-0bf99803e2fb47d35",
+        "transitEncryption": "ENABLED"
+      }
+    },
+    {
+      "name": "budget_server_data",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-0b3621c356212e774",
+        "transitEncryption": "ENABLED"
+      }
+    },
+    {
+      "name": "budget_client_data",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-01399d01724b40c37",
         "transitEncryption": "ENABLED"
       }
     }
