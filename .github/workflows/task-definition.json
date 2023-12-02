@@ -36,16 +36,6 @@
       ],
       "essential": true,
       "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_client",
-      "mountPoints": [
-        {
-          "containerPath": "/client",
-          "sourceVolume": "_Client"
-        },
-        {
-          "containerPath": "/client/node_modules",
-          "sourceVolume": "Client_Node_Modules"
-        }
-      ],
       "name": "budget_client",
       "portMappings": [
         {
@@ -67,12 +57,6 @@
       ],
       "essential": true,
       "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_rabbitmq",
-      "mountPoints": [
-        {
-          "containerPath": "/var/lib/rabbitmq",
-          "sourceVolume": "Rabbitmq_Data"
-        }
-      ],
       "name": "budget_rabbitmq",
       "portMappings": [
         {
@@ -95,16 +79,6 @@
       ],
       "essential": true,
       "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_server",
-      "mountPoints": [
-        {
-          "containerPath": "/server",
-          "sourceVolume": "_Server"
-        },
-        {
-          "containerPath": "/server/node_modules",
-          "sourceVolume": "Server_Node_Modules"
-        }
-      ],
       "name": "budget_server",
       "portMappings": [
         {
@@ -123,37 +97,5 @@
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
     "operatingSystemFamily": "LINUX"
-  },
-  "volumes": [
-    {
-      "host": {
-        "sourcePath": "rabbitmq_data"
-      },
-      "name": "Rabbitmq_Data"
-    },
-    {
-      "host": {
-        "sourcePath": "./server"
-      },
-      "name": "_Server"
-    },
-    {
-      "host": {
-        "sourcePath": "server_node_modules"
-      },
-      "name": "Server_Node_Modules"
-    },
-    {
-      "host": {
-        "sourcePath": "./client"
-      },
-      "name": "_Client"
-    },
-    {
-      "host": {
-        "sourcePath": "client_node_modules"
-      },
-      "name": "Client_Node_Modules"
-    }
-  ]
+  }
 }
