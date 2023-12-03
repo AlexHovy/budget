@@ -101,13 +101,8 @@
     },
     {
       "command": [
-        "./wait-for-it.sh",
-        "-t",
-        "0",
-        "localhost:5672",
-        "--",
-        "npm",
-        "start"
+        "/bin/bash", "-c",
+        "./wait-for-it.sh -t 0 localhost:5672 -- npm start"
       ],
       "environment": [
         {
