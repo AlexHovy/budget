@@ -83,16 +83,6 @@
           "hostPort": 15672
         }
       ],
-      "healthCheck": {
-        "command": [
-          "CMD-SHELL",
-          "rabbitmq-diagnostics -q check_running"
-        ],
-        "interval": 30,
-        "timeout": 5,
-        "retries": 5,
-        "startPeriod": 10
-      },
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -111,9 +101,13 @@
     },
     {
       "command": [
-        "sh",
-        "-c",
-        "until curl -f localhost:5672; do sleep 5; done; npm start"
+        "./wait-for-it.sh",
+        "-t",
+        "0",
+        "localhost:5672",
+        "--",
+        "npm",
+        "start"
       ],
       "environment": [
         {
