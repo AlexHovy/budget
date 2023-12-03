@@ -83,6 +83,16 @@
           "hostPort": 15672
         }
       ],
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "rabbitmq-diagnostics -q check_running"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 5,
+        "startPeriod": 10
+      },
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -101,13 +111,9 @@
     },
     {
       "command": [
-        "./wait-for-it.sh",
-        "-t",
-        "0",
-        "budget_rabbitmq:5672",
-        "--",
-        "npm",
-        "start"
+        "sh",
+        "-c",
+        "until rabbitmqctl status; do sleep 5; done; npm start"
       ],
       "environment": [
         {
