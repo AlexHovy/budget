@@ -9,7 +9,7 @@ on:
 
 env:
   ECS_SERVICE: budget-server
-  ECS_TASK_DEFINITION: ./task-definitions/server-task-definition.json
+  ECS_TASK_DEFINITION: .github/workflows/task-definitions/server-task-definition.json
   ECR_REPOSITORY: budget_server
   IMAGE_URI: ""
   CONTAINER_NAME: budget_server

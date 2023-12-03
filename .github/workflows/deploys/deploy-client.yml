@@ -9,7 +9,7 @@ on:
 
 env:
   ECS_SERVICE: budget-client
-  ECS_TASK_DEFINITION: ./task-definitions/client-task-definition.json
+  ECS_TASK_DEFINITION: .github/workflows/task-definitions/client-task-definition.json
   ECR_REPOSITORY: budget_client
   IMAGE_URI: ""
   CONTAINER_NAME: budget_client
