@@ -113,7 +113,7 @@
       "command": [
         "sh",
         "-c",
-        "until rabbitmqctl status; do sleep 5; done; npm start"
+        "until nc -z budget_rabbitmq 5672; do sleep 5; done; npm start"
       ],
       "environment": [
         {
