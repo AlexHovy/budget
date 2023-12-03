@@ -9,7 +9,7 @@
         },
         {
           "name": "REACT_APP_BASE_URL",
-          "value": "http://budget_server:8080/api"
+          "value": "http://localhost:8080/api"
         },
         {
           "name": "REACT_APP_FIREBASE_API_KEY",
@@ -113,7 +113,7 @@
       "command": [
         "sh",
         "-c",
-        "until curl budget_rabbitmq:5672; do sleep 5; done; npm start"
+        "until curl localhost:5672; do sleep 5; done; npm start"
       ],
       "environment": [
         {
@@ -122,7 +122,7 @@
         },
         {
           "name": "RABBITMQ_URI",
-          "value": "amqp://guest:guest@budget_rabbitmq:5672"
+          "value": "amqp://guest:guest@localhost:5672"
         },
         {
           "name": "DB_NAME",
