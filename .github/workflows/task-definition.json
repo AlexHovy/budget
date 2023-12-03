@@ -143,6 +143,7 @@
   ],
   "family": "budget",
   "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::736187710965:role/ecsTaskRole",
   "networkMode": "awsvpc",
   "requiresCompatibilities": ["FARGATE"],
   "cpu": "2048",
