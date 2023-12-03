@@ -9,7 +9,7 @@
         },
         {
           "name": "REACT_APP_BASE_URL",
-          "value": "http://localhost:8080/api"
+          "value": "/api"
         },
         {
           "name": "REACT_APP_FIREBASE_API_KEY",
