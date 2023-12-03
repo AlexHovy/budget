@@ -100,7 +100,15 @@
       ]
     },
     {
-      "command": ["npm", "start"],
+      "command": [
+        "./wait-for-it.sh",
+        "-t",
+        "0",
+        "budget_rabbitmq:5672",
+        "--",
+        "npm",
+        "start"
+      ],
       "environment": [
         {
           "name": "NODE_ENV",
