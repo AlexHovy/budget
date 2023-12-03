@@ -113,7 +113,7 @@
       "command": [
         "sh",
         "-c",
-        "until curl localhost:5672; do sleep 5; done; npm start"
+        "until curl -f localhost:5672; do sleep 5; done; npm start"
       ],
       "environment": [
         {
