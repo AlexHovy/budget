@@ -31,16 +31,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy RabbitMQ Service
-        uses: /deploys/deploy-rabbitmq.yml
+        uses: ./deploys/deploy-rabbitmq.yml
         with:
           ecs_cluster: ${{ env.ECS_CLUSTER }}
 
       - name: Deploy Server Service
-        uses: /deploys/deploy-server.yml
+        uses: ./deploys/deploy-server.yml
         with:
           ecs_cluster: ${{ env.ECS_CLUSTER }}
 
       - name: Deploy Client Service
-        uses: /deploys/deploy-client.yml
+        uses: ./deploys/deploy-client.yml
         with:
           ecs_cluster: ${{ env.ECS_CLUSTER }}
