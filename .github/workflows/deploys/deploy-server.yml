@@ -1,0 +1,47 @@
+name: Deploy Server Service
+
+on:
+  workflow_call:
+    inputs:
+      ecs_cluster:
+        required: true
+        type: string
+
+env:
+  ECS_SERVICE: budget-server
+  ECS_TASK_DEFINITION: ./task-definitions/server-task-definition.json
+  ECR_REPOSITORY: budget_server
+  IMAGE_URI: ""
+  CONTAINER_NAME: budget_server
+
+jobs:
+  deploy-server:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image-server
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker-compose build server
+          docker tag docker.io/library/budget_server:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def-server
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ env.IMAGE_URI }}
+
+      - name: Deploy to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def-server.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ inputs.ecs_cluster }}
+          wait-for-service-stability: true

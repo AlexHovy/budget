@@ -1,0 +1,83 @@
+{
+  "family": "budget-client",
+  "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::736187710965:role/ecsTaskRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "1024",
+  "memory": "2048",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "containerDefinitions": [
+    {
+      "essential": true,
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_client",
+      "name": "budget_client",
+      "command": ["npm", "start"],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "REACT_APP_BASE_URL",
+          "value": "http://budget-api.alexhovy.me/api"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_API_KEY",
+          "value": "AIzaSyCxhXyhROAqVJsB1B2CHDzaQ40T5goTIVQ"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_AUTH_DOMAIN",
+          "value": "budget-6c4bb.firebaseapp.com"
+        },
+        { "name": "REACT_APP_FIREBASE_PROJECT_ID", "value": "budget-6c4bb" },
+        {
+          "name": "REACT_APP_FIREBASE_STORAGE_BUCKET",
+          "value": "budget-6c4bb.appspot.com"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_MESSAGING_SENDER_ID",
+          "value": "934035370716"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_APP_ID",
+          "value": "1:934035370716:web:df7b78b4bff226eabbba19"
+        },
+        { "name": "REACT_APP_FIREBASE_MEASUREMENT_ID", "value": "G-YNF6TSPBTP" }
+      ],
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/budget",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "budget_client_data",
+          "containerPath": "/var/lib/client"
+        }
+      ]
+    }
+  ],
+  "volumes": [
+    {
+      "name": "budget_client_data",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-01399d01724b40c37",
+        "transitEncryption": "ENABLED"
+      }
+    }
+  ]
+}
