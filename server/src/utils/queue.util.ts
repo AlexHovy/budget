@@ -23,6 +23,15 @@ export class Queue<T> {
     }
   }
 
+  async isHealthy(): Promise<boolean> {
+    try {
+      const isChannelCreated = this.channel !== null;
+      return isChannelCreated;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async setHandler(handler: IBaseHandler<T>): Promise<void> {
     try {
       this.queueName = this.getClassName(handler);

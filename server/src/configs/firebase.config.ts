@@ -14,4 +14,13 @@ export class FirebaseConfig {
       throw new InternalServerError(errorMessage);
     }
   }
+
+  async isHealthy(): Promise<boolean> {
+    try {
+      await admin.auth().listUsers(1);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
