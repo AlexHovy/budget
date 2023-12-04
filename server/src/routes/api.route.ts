@@ -1,14 +1,14 @@
 import { Router } from "express";
 import {
   categoryController,
-  healthCheckController,
+  healthController,
   transactionController,
 } from "../configs/dependency.config";
 import { verifyToken } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-router.get("/health-check/", verifyToken, healthCheckController.get);
+router.get("/health/", healthController.get);
 
 router.get("/category/", verifyToken, categoryController.get);
 router.get("/category/:id", verifyToken, categoryController.getById);

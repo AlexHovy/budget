@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { HttpStatusCode } from "../constants/http-status-codes";
 
-export class HealthCheckController {
+export class HealthController {
   async get(
     req: Request,
     res: Response,

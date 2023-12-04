@@ -48,6 +48,16 @@
           "awslogs-region": "eu-north-1",
           "awslogs-stream-prefix": "ecs"
         }
+      },
+      "healthCheck": {
+        "retries": 3,
+        "command": [
+          "CMD-SHELL",
+          "curl -f http://localhost:8080/health || exit 1"
+        ],
+        "timeout": 5,
+        "interval": 30,
+        "startPeriod": 10
       }
     }
   ]
