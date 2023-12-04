@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use("/api", apiRoutes);
+app.use("/", apiRoutes);
 
 // Connections
 databaseConfig.connect();
