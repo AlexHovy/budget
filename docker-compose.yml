@@ -13,8 +13,8 @@ services:
       - rabbitmq_data:/var/lib/rabbitmq
 
   server:
-    container_name: budget-server
-    image: budget-server:latest
+    container_name: budget-server-container
+    image: budget-server-container:latest
     build: ./server
     ports:
       - "8080:8080"
@@ -28,8 +28,8 @@ services:
     command: ["./wait-for-it.sh", "-t", "0", "rabbitmq:5672", "--", "npm", "start"]
 
   client:
-    container_name: budget-client
-    image: budget-client:latest
+    container_name: budget-client-container
+    image: budget-client-container:latest
     build: ./client
     ports:
       - "3000:3000"
