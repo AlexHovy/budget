@@ -6,13 +6,15 @@ on:
       ecs_cluster:
         required: true
         type: string
+      ecs_service:
+        required: true
+        type: string
 
 env:
-  ECS_SERVICE: budget-rabbitmq
   ECS_TASK_DEFINITION: .github/workflows/task-definitions/rabbitmq-task-definition.json
-  ECR_REPOSITORY: budget_rabbitmq
+  ECR_REPOSITORY: budget-rabbitmq-repo
   IMAGE_URI: ""
-  CONTAINER_NAME: budget_rabbitmq
+  CONTAINER_NAME: budget-rabbitmq
 
 jobs:
   deploy-rabbitmq:
@@ -42,6 +44,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def-rabbitmq.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
+          service: ${{ inputs.ecs_service }}
           cluster: ${{ inputs.ecs_cluster }}
           wait-for-service-stability: true

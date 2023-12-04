@@ -6,13 +6,15 @@ on:
       ecs_cluster:
         required: true
         type: string
+      ecs_service:
+        required: true
+        type: string
 
 env:
-  ECS_SERVICE: budget-server
   ECS_TASK_DEFINITION: .github/workflows/task-definitions/server-task-definition.json
-  ECR_REPOSITORY: budget_server
+  ECR_REPOSITORY: budget-server-repo
   IMAGE_URI: ""
-  CONTAINER_NAME: budget_server
+  CONTAINER_NAME: budget-server
 
 jobs:
   deploy-server:
@@ -26,7 +28,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker-compose build server
-          docker tag docker.io/library/budget_server:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag docker.io/library/$CONTAINER_NAME:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
@@ -42,6 +44,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def-server.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
+          service: ${{ inputs.ecs_service }}
           cluster: ${{ inputs.ecs_cluster }}
           wait-for-service-stability: true

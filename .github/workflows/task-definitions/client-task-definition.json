@@ -13,8 +13,8 @@
   "containerDefinitions": [
     {
       "essential": true,
-      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_client",
-      "name": "budget_client",
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget-client-repo",
+      "name": "budget-client",
       "command": ["npm", "start"],
       "environment": [
         {
@@ -62,21 +62,6 @@
           "awslogs-region": "eu-north-1",
           "awslogs-stream-prefix": "ecs"
         }
-      },
-      "mountPoints": [
-        {
-          "sourceVolume": "budget_client_data",
-          "containerPath": "/var/lib/client"
-        }
-      ]
-    }
-  ],
-  "volumes": [
-    {
-      "name": "budget_client_data",
-      "efsVolumeConfiguration": {
-        "fileSystemId": "fs-01399d01724b40c37",
-        "transitEncryption": "ENABLED"
       }
     }
   ]

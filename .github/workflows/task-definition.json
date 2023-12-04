@@ -1,0 +1,182 @@
+{
+  "containerDefinitions": [
+    {
+      "command": ["npm", "start"],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "REACT_APP_BASE_URL",
+          "value": "/api"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_API_KEY",
+          "value": "AIzaSyCxhXyhROAqVJsB1B2CHDzaQ40T5goTIVQ"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_AUTH_DOMAIN",
+          "value": "budget-6c4bb.firebaseapp.com"
+        },
+        { "name": "REACT_APP_FIREBASE_PROJECT_ID", "value": "budget-6c4bb" },
+        {
+          "name": "REACT_APP_FIREBASE_STORAGE_BUCKET",
+          "value": "budget-6c4bb.appspot.com"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_MESSAGING_SENDER_ID",
+          "value": "934035370716"
+        },
+        {
+          "name": "REACT_APP_FIREBASE_APP_ID",
+          "value": "1:934035370716:web:df7b78b4bff226eabbba19"
+        },
+        { "name": "REACT_APP_FIREBASE_MEASUREMENT_ID", "value": "G-YNF6TSPBTP" }
+      ],
+      "essential": true,
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_client",
+      "name": "budget_client",
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 3000
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/budget",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "budget_client_data",
+          "containerPath": "/var/lib/client"
+        }
+      ]
+    },
+    {
+      "environment": [
+        {
+          "name": "RABBITMQ_DEFAULT_USER",
+          "value": "guest"
+        },
+        {
+          "name": "RABBITMQ_DEFAULT_PASS",
+          "value": "guest"
+        }
+      ],
+      "essential": true,
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_rabbitmq",
+      "name": "budget_rabbitmq",
+      "portMappings": [
+        {
+          "containerPort": 5672,
+          "hostPort": 5672
+        },
+        {
+          "containerPort": 15672,
+          "hostPort": 15672
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/budget",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "budget_rabbitmq_data",
+          "containerPath": "/var/lib/rabbitmq"
+        }
+      ]
+    },
+    {
+      "command": [
+        "sh",
+        "-c",
+        "/wait-for-it.sh -t 0 localhost:5672 && npm start"
+      ],
+      "environment": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "RABBITMQ_URI",
+          "value": "amqp://guest:guest@localhost:5672"
+        },
+        {
+          "name": "DB_NAME",
+          "value": "Budget"
+        }
+      ],
+      "essential": true,
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_server",
+      "name": "budget_server",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/budget",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "mountPoints": [
+        {
+          "sourceVolume": "budget_server_data",
+          "containerPath": "/var/lib/server"
+        }
+      ]
+    }
+  ],
+  "family": "budget",
+  "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::736187710965:role/ecsTaskRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "2048",
+  "memory": "4096",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "volumes": [
+    {
+      "name": "budget_rabbitmq_data",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-0bf99803e2fb47d35",
+        "transitEncryption": "ENABLED"
+      }
+    },
+    {
+      "name": "budget_server_data",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-0b3621c356212e774",
+        "transitEncryption": "ENABLED"
+      }
+    },
+    {
+      "name": "budget_client_data",
+      "efsVolumeConfiguration": {
+        "fileSystemId": "fs-01399d01724b40c37",
+        "transitEncryption": "ENABLED"
+      }
+    }
+  ]
+}

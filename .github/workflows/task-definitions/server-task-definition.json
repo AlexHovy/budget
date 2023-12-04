@@ -13,12 +13,12 @@
   "containerDefinitions": [
     {
       "essential": true,
-      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_server",
-      "name": "budget_server",
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget-server-repo",
+      "name": "budget-server",
       "command": [
         "sh",
         "-c",
-        "/wait-for-it.sh -t 0 budget_rabbitmq:5672 && npm start"
+        "/wait-for-it.sh -t 0 budget-rabbitmq:5672 && npm start"
       ],
       "environment": [
         {
@@ -27,7 +27,7 @@
         },
         {
           "name": "RABBITMQ_URI",
-          "value": "amqp://guest:guest@budget_rabbitmq:5672"
+          "value": "amqp://guest:guest@budget-rabbitmq:5672"
         },
         {
           "name": "DB_NAME",
@@ -48,21 +48,6 @@
           "awslogs-region": "eu-north-1",
           "awslogs-stream-prefix": "ecs"
         }
-      },
-      "mountPoints": [
-        {
-          "sourceVolume": "budget_server_data",
-          "containerPath": "/var/lib/server"
-        }
-      ]
-    }
-  ],
-  "volumes": [
-    {
-      "name": "budget_server_data",
-      "efsVolumeConfiguration": {
-        "fileSystemId": "fs-0b3621c356212e774",
-        "transitEncryption": "ENABLED"
       }
     }
   ]

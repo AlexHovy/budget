@@ -13,8 +13,8 @@
   "containerDefinitions": [
     {
       "essential": true,
-      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget_rabbitmq",
-      "name": "budget_rabbitmq",
+      "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget-rabbitmq-repo",
+      "name": "budget-rabbitmq",
       "environment": [
         {
           "name": "RABBITMQ_DEFAULT_USER",
@@ -46,7 +46,7 @@
       },
       "mountPoints": [
         {
-          "sourceVolume": "budget_rabbitmq_data",
+          "sourceVolume": "budget-rabbitmq-data",
           "containerPath": "/var/lib/rabbitmq"
         }
       ]
@@ -54,9 +54,9 @@
   ],
   "volumes": [
     {
-      "name": "budget_rabbitmq_data",
+      "name": "budget-rabbitmq-data",
       "efsVolumeConfiguration": {
-        "fileSystemId": "fs-0bf99803e2fb47d35",
+        "fileSystemId": "fs-07d5ab4a702e2e22f",
         "transitEncryption": "ENABLED"
       }
     }
