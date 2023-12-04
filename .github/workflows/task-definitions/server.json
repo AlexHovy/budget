@@ -18,7 +18,7 @@
       "command": [
         "sh",
         "-c",
-        "/wait-for-it.sh -t 0 budget-rabbitmq:5672 && npm start"
+        "/wait-for-it.sh -t 0 rabbitmq.budget.internal:5672 && npm start"
       ],
       "environment": [
         {
@@ -27,7 +27,7 @@
         },
         {
           "name": "RABBITMQ_URI",
-          "value": "amqp://guest:guest@budget-rabbitmq:5672"
+          "value": "amqp://guest:guest@rabbitmq.budget.internal:5672"
         },
         {
           "name": "DB_NAME",
