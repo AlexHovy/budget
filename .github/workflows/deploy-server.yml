@@ -1,4 +1,4 @@
-name: Deploy RabbitMQ Services to ECS
+name: Deploy Server Services to ECS
 
 on:
   push:
@@ -7,11 +7,11 @@ on:
 env:
   AWS_REGION: eu-north-1
   ECS_CLUSTER: budget
-  ECS_SERVICE: budget-rabbitmq
-  ECS_TASK_DEFINITION: .github/workflows/task-definitions/rabbitmq.json
-  ECR_REPOSITORY: budget-rabbitmq-repo
+  ECS_SERVICE: budget-server
+  ECS_TASK_DEFINITION: .github/workflows/task-definitions/server.json
+  ECR_REPOSITORY: budget-server-repo
   IMAGE_URI: ""
-  CONTAINER_NAME: budget-rabbitmq
+  CONTAINER_NAME: budget-server
 
 permissions:
   contents: read
@@ -43,8 +43,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker pull rabbitmq:latest
-          docker tag rabbitmq:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker-compose build server
+          docker tag docker.io/library/$CONTAINER_NAME:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
