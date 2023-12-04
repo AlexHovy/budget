@@ -8,7 +8,7 @@ export class HealthController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      return res.status(HttpStatusCode.OK);
+      return res.sendStatus(HttpStatusCode.OK);
     } catch (error) {
       return next(error);
     }

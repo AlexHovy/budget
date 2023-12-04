@@ -15,12 +15,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Endpoint}}/api/category",
+							"raw": "{{Endpoint}}/category",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"category"
 							]
 						}
@@ -33,14 +32,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Endpoint}}/api/category/655a53a2bb6d271cf290d5a7",
+							"raw": "{{Endpoint}}/category/655d9e4c7d48dc9a02127f1f",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"category",
-								"655a53a2bb6d271cf290d5a7"
+								"655d9e4c7d48dc9a02127f1f"
 							]
 						}
 					},
@@ -61,12 +59,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{Endpoint}}/api/category",
+							"raw": "{{Endpoint}}/category",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"category"
 							]
 						}
@@ -88,12 +85,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{Endpoint}}/api/category/65539c8f9863d6c2bc4967ee",
+							"raw": "{{Endpoint}}/category/65539c8f9863d6c2bc4967ee",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"category",
 								"65539c8f9863d6c2bc4967ee"
 							]
@@ -107,14 +103,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{Endpoint}}/api/category/65539c8f9863d6c2bc4967ee",
+							"raw": "{{Endpoint}}/category/655631838eab3844f034d9c6",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"category",
-								"65539c8f9863d6c2bc4967ee"
+								"655631838eab3844f034d9c6"
 							]
 						}
 					},
@@ -131,12 +126,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Endpoint}}/api/transaction",
+							"raw": "{{Endpoint}}/transaction",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"transaction"
 							]
 						}
@@ -149,12 +143,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{Endpoint}}/api/transaction/65525daee92c21730fb7924b",
+							"raw": "{{Endpoint}}/transaction/65525daee92c21730fb7924b",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"transaction",
 								"65525daee92c21730fb7924b"
 							]
@@ -177,12 +170,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{Endpoint}}/api/transaction",
+							"raw": "{{Endpoint}}/transaction",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"transaction"
 							]
 						}
@@ -204,12 +196,11 @@
 							}
 						},
 						"url": {
-							"raw": "{{Endpoint}}/api/transaction/65539dfd9863d6c2bc4967f9",
+							"raw": "{{Endpoint}}/transaction/65539dfd9863d6c2bc4967f9",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"transaction",
 								"65539dfd9863d6c2bc4967f9"
 							]
@@ -223,12 +214,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{Endpoint}}/api/transaction/6556222639cbf3d3ea3a5c55",
+							"raw": "{{Endpoint}}/transaction/6556222639cbf3d3ea3a5c55",
 							"host": [
 								"{{Endpoint}}"
 							],
 							"path": [
-								"api",
 								"transaction",
 								"6556222639cbf3d3ea3a5c55"
 							]
