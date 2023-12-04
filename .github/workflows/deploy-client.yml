@@ -44,7 +44,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker-compose build client
-          docker tag docker.io/library/$CONTAINER_NAME $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag docker.io/library/budget_client:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
 
