@@ -16,6 +16,7 @@ import { FirebaseConfig } from "./firebase.config";
 import { AWSParameterStoreService } from "../services/aws-parameter-store.service";
 import { SettingsService } from "../services/settings.service";
 import { FileHelper } from "../helpers/file.helper";
+import { HealthCheckController } from "../controllers/health-check.controller";
 
 export const parameterStore = new AWSParameterStoreService();
 export const settingsService = new SettingsService();
@@ -48,5 +49,6 @@ export const transactionService = new TransactionService(transactionRepository);
 export const fileHelper = new FileHelper();
 
 // Controllers
+export const healthCheckController = new HealthCheckController();
 export const categoryController = new CategoryController();
 export const transactionController = new TransactionController();
