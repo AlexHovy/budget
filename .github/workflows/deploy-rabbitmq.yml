@@ -6,12 +6,12 @@ on:
 
 env:
   AWS_REGION: eu-north-1
-  ECS_CLUSTER: budget
-  ECS_SERVICE: budget-rabbitmq
+  ECS_CLUSTER: budget-cluster
+  ECS_SERVICE: budget-rabbitmq-service
   ECS_TASK_DEFINITION: .github/workflows/task-definitions/rabbitmq.json
   ECR_REPOSITORY: budget-rabbitmq-repo
   IMAGE_URI: ""
-  CONTAINER_NAME: budget-rabbitmq
+  CONTAINER_NAME: budget-rabbitmq-container
 
 permissions:
   contents: read

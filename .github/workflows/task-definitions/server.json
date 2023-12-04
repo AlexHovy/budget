@@ -1,5 +1,5 @@
 {
-  "family": "budget-server",
+  "family": "budget-server-task-definition",
   "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
   "taskRoleArn": "arn:aws:iam::736187710965:role/ecsTaskRole",
   "networkMode": "awsvpc",
@@ -14,7 +14,7 @@
     {
       "essential": true,
       "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget-server-repo",
-      "name": "budget-server",
+      "name": "budget-server-container",
       "command": [
         "sh",
         "-c",

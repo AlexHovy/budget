@@ -6,12 +6,12 @@ on:
 
 env:
   AWS_REGION: eu-north-1
-  ECS_CLUSTER: budget
-  ECS_SERVICE: budget-server
+  ECS_CLUSTER: budget-cluster
+  ECS_SERVICE: budget-server-service
   ECS_TASK_DEFINITION: .github/workflows/task-definitions/server.json
   ECR_REPOSITORY: budget-server-repo
   IMAGE_URI: ""
-  CONTAINER_NAME: budget-server
+  CONTAINER_NAME: budget-server-container
 
 permissions:
   contents: read

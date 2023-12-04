@@ -1,5 +1,5 @@
 {
-  "family": "budget-rabbitmq",
+  "family": "budget-rabbitmq-task-definition",
   "executionRoleArn": "arn:aws:iam::736187710965:role/ecsTaskExecutionRole",
   "taskRoleArn": "arn:aws:iam::736187710965:role/ecsTaskRole",
   "networkMode": "awsvpc",
@@ -14,7 +14,7 @@
     {
       "essential": true,
       "image": "736187710965.dkr.ecr.eu-north-1.amazonaws.com/budget-rabbitmq-repo",
-      "name": "budget-rabbitmq",
+      "name": "budget-rabbitmq-container",
       "environment": [
         {
           "name": "RABBITMQ_DEFAULT_USER",
