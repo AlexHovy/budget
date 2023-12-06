@@ -23,7 +23,7 @@
         },
         {
           "name": "REACT_APP_BASE_URL",
-          "value": "http://budget-api.alexhovy.me"
+          "value": "http://budget-api.alexhovy.dev"
         },
         {
           "name": "REACT_APP_FIREBASE_API_KEY",
