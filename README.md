@@ -1,14 +1,12 @@
 # budget
 
-Welcome to the Budget Application repository! This project is designed to help users manage their finances effectively. It's built using modern web technologies and offers a range of features to track and analyze financial transactions.
-
 ## Key Features
 
-- **User Management**: Register and manage user accounts.
+- **User Management**: Register and manage user accounts using Firebase.
 - **Category Management**: Organize transactions into categories for better tracking.
 - **Transaction Management**: Record and track income and expenses.
 - **Data Persistence**: Uses MongoDB for storing and retrieving data.
-- **Secure Authentication**: Ensures user data security and integrity.
+- **Secure Authentication**: Ensures user data security and integrity using Firebase
 
 ## Technologies Used
 
@@ -21,6 +19,12 @@ Welcome to the Budget Application repository! This project is designed to help u
 
 To get started with this project, clone the repository and follow the setup instructions in the `server` directory. You'll need to have Node.js, Docker, and RabbitMQ installed on your system.
 
-## Contribution
+## Configs
+- Copy `client/example.env` and rename copied version to `.env`
+- Copy `server/example.env` and rename copied version to `.env`
+- Copy `server/example.firebase-service-account.json` and rename copied version to `firebase-service-account.json`
+- Remeber to replace config values
 
-Contributions to the project are welcome! Please refer to the contribution guidelines for more information.
+## Postman
+- You will find a Postman export at `postman`
+- Remember to change the `Variables` in the parent folder
